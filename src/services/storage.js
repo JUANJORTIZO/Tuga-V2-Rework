@@ -233,8 +233,7 @@ export function getCases() {
 }
 
 export function getCaseByCode(code) {
-  const searchTerm = code.toLowerCase()
-  return getCases().find((c) => c.codigo.toLowerCase().includes(searchTerm)) || null
+  return getCases().find((c) => c.codigo === code) || null
 }
 
 export function createCase(data) {
