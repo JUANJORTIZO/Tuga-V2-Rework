@@ -187,4 +187,3 @@ function InfoRow({ label, value, gray = false }) {
     </div>
   )
 }
-
