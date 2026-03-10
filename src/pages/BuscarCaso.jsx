@@ -19,11 +19,14 @@ export default function BuscarCaso() {
       setError('Ingrese un codigo de caso')
       return
     }
+    console.log('[v0] Searching for case with code:', codigo.trim())
     const caso = getCaseByCode(codigo.trim())
+    console.log('[v0] Found case:', caso)
     if (!caso) {
       setError('No se encontro un caso con ese codigo')
       return
     }
+    console.log('[v0] Navigating to:', `/casos/${caso.codigo}`)
     navigate(`/casos/${caso.codigo}`)
   }
 
