@@ -24,7 +24,7 @@ export default function BuscarCaso() {
       setError('No se encontro un caso con ese codigo')
       return
     }
-    navigate(`/casos/${codigo.trim()}`)
+    navigate(`/casos/${caso.codigo}`)
   }
 
   return (
