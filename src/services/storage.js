@@ -109,8 +109,6 @@ const SEED_DATA = {
   ],
   cases: [
     {
-      /*ELA22005525*/
-      // 
       codigo: 'ELA22005525',
       userCode: '11.151',
       tipo: 'Concepto por Areas - Derecho Laboral',
@@ -235,7 +233,8 @@ export function getCases() {
 }
 
 export function getCaseByCode(code) {
-  return getCases().find((c) => c.codigo === code) || null
+  const searchTerm = code.toLowerCase()
+  return getCases().find((c) => c.codigo.toLowerCase().includes(searchTerm)) || null
 }
 
 export function createCase(data) {
