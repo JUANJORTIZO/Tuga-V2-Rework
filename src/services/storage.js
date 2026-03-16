@@ -111,6 +111,7 @@ const SEED_DATA = {
     {
       // ELA22005525
       codigo: '5525',
+      numeroCaso: 'ELA22005525',
       userCode: '11.151',
       tipo: 'Concepto por Areas - Derecho Laboral',
       estudianteRegistra: 'ISABELLA MOLINA SANCHEZ',

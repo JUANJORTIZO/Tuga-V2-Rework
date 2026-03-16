@@ -71,7 +71,7 @@ export default function CasoDetalle() {
             <InfoRow label="NOMBRE DEL USUARIO" value={user ? `${user.nombres} ${user.apellidos}` : ''} />
             <InfoRow label="DOCUMENTO" value={user?.numeroDocumento || ''} gray />
             <InfoRow label="FECHA DE REGISTRO" value={caso.fechaRegistro} />
-            <InfoRow label="CASO" value={caso.codigo} gray />
+            <InfoRow label="CASO" value={caso.numeroCaso} gray />
             <InfoRow label="TIPO" value={caso.tipo} />
             <InfoRow label="ESTUDIANTE QUE REGISTRA" value={caso.estudianteRegistra} gray />
             <InfoRow label="RELATO DE LOS HECHOS" value={caso.relato} />
