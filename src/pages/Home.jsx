@@ -18,7 +18,7 @@ export default function Home() {
             {'!Bienvenido, '}{session?.name || 'Usuario'}{'!'}
           </h1>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-6 max-w-5xl mx-auto">
             <ActionCard
               icon={<Pencil size={48} strokeWidth={2} />}
               label="Asignar Turnos"
