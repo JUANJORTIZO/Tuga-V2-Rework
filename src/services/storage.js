@@ -109,7 +109,12 @@ const SEED_DATA = {
   ],
   cases: [
     {
+      /*  git add .
+          git commit -m "actualizacion del proyecto"
+          git push   */ 
+
       // ELA22005525
+      
       codigo: '5525',
       numeroCaso: 'ELA22005525',
       userCode: '11.151',
