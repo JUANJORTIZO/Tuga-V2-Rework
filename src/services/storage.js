@@ -297,11 +297,28 @@ export function createCaseFromTurn(formData) {
 export function addCaseHistory(codigo, entry) {
   const cases = getCases()
   const idx = cases.findIndex((c) => c.codigo === codigo)
+
   if (idx !== -1) {
     if (!cases[idx].history) cases[idx].history = []
-    cases[idx].history.push(entry)
+    if (!cases[idx].attachments) cases[idx].attachments = []
+
+    const historyEntry = {
+      fecha: entry.fecha,
+      estado: entry.estado,
+      abogado: entry.abogado,
+      detalle: entry.detalle,
+      remitidoA: entry.remitidoA || '',
+    }
+
+    cases[idx].history.push(historyEntry)
+
+    if (entry.adjunto) {
+      cases[idx].attachments.push(entry.adjunto)
+    }
+
     localStorage.setItem(STORAGE_KEYS.CASES, JSON.stringify(cases))
     return cases[idx]
   }
+
   return null
 }

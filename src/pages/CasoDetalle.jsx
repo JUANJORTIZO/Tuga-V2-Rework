@@ -34,14 +34,25 @@ export default function CasoDetalle() {
     }
     const session = getSession()
     const now = new Date()
+
     const fecha = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
+
     addCaseHistory(codigo, {
       fecha,
       estado: 'EN PROCESO',
       abogado: session?.name || 'Desconocido',
       detalle: historyForm.detalle,
       remitidoA: '',
+      adjunto: historyForm.adjunto
+        ? {
+          id: Date.now(),
+          fecha,
+          nombre: historyForm.adjunto.name,
+          url: URL.createObjectURL(historyForm.adjunto),
+        }
+        : null,
     })
+
     setHistoryForm({ verInforme: false, detalle: '', adjunto: null })
     loadCase()
   }
@@ -97,7 +108,13 @@ export default function CasoDetalle() {
                     <td className="border border-gray-300 px-4 py-2 text-center">{att.id.toLocaleString()}</td>
                     <td className="border border-gray-300 px-4 py-2">{att.fecha}</td>
                     <td className="border border-gray-300 px-4 py-2">
-                      <button className="text-usb-blue-link hover:underline cursor-pointer">{att.nombre}</button>
+                      <a
+                        href={att.url}
+                        download={att.nombre}
+                        className="text-usb-blue-link hover:underline cursor-pointer"
+                      >
+                        {att.nombre}
+                      </a>
                     </td>
                   </tr>
                 ))}
