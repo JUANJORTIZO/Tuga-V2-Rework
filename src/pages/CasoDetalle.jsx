@@ -68,13 +68,16 @@ export default function CasoDetalle() {
           {/* Case Info Table */}
           <div className="border border-gray-300 text-sm mb-8">
             <InfoRow label="CODIGO" value={caso.codigo} gray />
-            <InfoRow label="NOMBRE DEL USUARIO" value={user ? `${user.nombres} ${user.apellidos}` : ''} />
-            <InfoRow label="DOCUMENTO" value={user?.numeroDocumento || ''} gray />
+            <InfoRow
+              label="NOMBRE DEL USUARIO"
+              value={user ? `${user.nombres} ${user.apellidos}` : caso.nombreUsuario || ''}
+            />
+            <InfoRow label="DOCUMENTO" value={user?.numeroDocumento || caso.userCode || ''} gray />
             <InfoRow label="FECHA DE REGISTRO" value={caso.fechaRegistro} />
             <InfoRow label="CASO" value={caso.numeroCaso} gray />
             <InfoRow label="TIPO" value={caso.tipo} />
             <InfoRow label="ESTUDIANTE QUE REGISTRA" value={caso.estudianteRegistra} gray />
-            <InfoRow label="RELATO DE LOS HECHOS" value={caso.relato} />
+            <InfoRow label="RELATO DE LOS HECHOS" value={caso.relatoHechos || caso.relato || ''} />
           </div>
 
           {/* Archivos Adjuntos */}

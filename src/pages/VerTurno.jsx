@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getTurnById, getUserByCode, updateTurn } from '../services/storage'
+import { getTurnById, getUserByCode, updateTurn, createCaseFromTurn, getSession } from '../services/storage'
 import Navbar from '../components/Navbar'
 import BackgroundLayout from '../components/BackgroundLayout'
 import Panel from '../components/Panel'
@@ -54,6 +54,39 @@ export default function VerTurno() {
   function updateField(field) {
     return (value) => setForm((prev) => ({ ...prev, [field]: value }))
   }
+
+  function getNombreCompleto() {
+    return `${form.nombres || ''} ${form.apellidos || ''}`.trim()
+  }
+
+  function handleCreateCase() {
+  const session = getSession()
+
+  const newCase = createCaseFromTurn({
+    userCode: form.numeroDocumento || turn.userCode || '',
+    tipo: caseForm.areaDerecho || caseForm.tipoNegocio || '',
+    estudianteRegistra: session?.name || 'Desconocido',
+    estudianteAsignado: pretForm.asignarA || '',
+    fechaRegistro: turn.fecha || new Date().toLocaleString('es-CO'),
+    nombreUsuario: getNombreCompleto(),
+    relatoHechos: caseForm.relato || '',
+    observaciones: pretForm.observaciones || '',
+    pretensiones: pretForm.pretensiones || '',
+    sede: caseForm.sede || turn.sede || '',
+    attachments: pretForm.adjuntos
+      ? [
+          {
+            id: Date.now(),
+            fecha: new Date().toLocaleString('es-CO'),
+            nombre: pretForm.adjuntos.name,
+          },
+        ]
+      : [],
+    history: [],
+  })
+
+  navigate(`/casos/${newCase.codigo}`)
+}
 
   if (!turn || !user) {
     return (
@@ -189,12 +222,12 @@ export default function VerTurno() {
           {/* Case info table */}
           <div className="border border-gray-300 text-sm">
             <TableRow label="FECHA" value={turn.fecha || ''} gray />
-            <TableRow label="SEDE" value={turn.sede || ''} />
+            <TableRow label="SEDE" value={caseForm.sede || turn.sede || ''} />
             <TableRow label="TURNO" value={String(turn.id)} gray />
             <TableRow label="ESTUDIANTE QUE REGISTRA" value={pretForm.asignarA || ''} />
             <TableRow label="ESTUDIANTE ASIGNADO" value="" gray />
-            <TableRow label="CASO" value={caseForm.areaDerecho || ''} />
-            <TableRow label="NUMERO DE CASO" value="" gray />
+            <TableRow label="CASO" value={caseForm.areaDerecho || caseForm.tipoNegocio || ''} />
+            <TableRow label="NUMERO DE CASO" value="Se generará al guardar" gray />
           </div>
 
           {/* No info message */}
@@ -245,8 +278,13 @@ export default function VerTurno() {
             </div>
           </div>
 
-          <div className="flex justify-end mt-8">
-            <OrangeButton onClick={() => navigate('/turnos')}>Volver</OrangeButton>
+          <div className="flex justify-between mt-8">
+            <OrangeButton variant="primary" onClick={() => setStep(3)}>
+              {'Atrás'}
+            </OrangeButton>
+            <OrangeButton onClick={handleCreateCase}>
+              Guardar caso
+            </OrangeButton>
           </div>
         </Panel>
       </BackgroundLayout>

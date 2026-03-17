@@ -10,6 +10,7 @@ const SEED_DATA = {
   admins: [
     { username: 'admin', password: 'admin', name: 'Administrador' },
     { username: 'isabella', password: '1234', name: 'Isabella Molina Sanchez' },
+    { username: 'Erazo', password: '4321', name: 'Santiago Erazo Ortega' },
   ],
   users: [
     {
@@ -114,7 +115,7 @@ const SEED_DATA = {
           git push   */ 
 
       // ELA22005525
-      
+
       codigo: '5525',
       numeroCaso: 'ELA22005525',
       userCode: '11.151',
@@ -249,6 +250,49 @@ export function createCase(data) {
   localStorage.setItem(STORAGE_KEYS.CASES, JSON.stringify(cases))
   return data
 }
+
+
+export function generateNextCaseCodes() {
+  const cases = getCases()
+
+  const maxCodigo = cases.reduce((max, item) => {
+    const numero = parseInt(item.codigo || '0', 10)
+    return numero > max ? numero : max
+  }, 5524)
+
+  const nextCodigo = maxCodigo + 1
+
+  return {
+    codigo: String(nextCodigo),
+    numeroCaso: `ELA2200${String(nextCodigo).padStart(4, '0')}`,
+  }
+}
+
+
+export function createCaseFromTurn(formData) {
+  const { codigo, numeroCaso } = generateNextCaseCodes()
+
+  const newCase = {
+    codigo,
+    numeroCaso,
+    userCode: formData.userCode || '',
+    tipo: formData.tipo || '',
+    estudianteRegistra: formData.estudianteRegistra || 'ISABELLA MOLINA SANCHEZ',
+    estudianteAsignado: formData.estudianteAsignado || '',
+    fechaRegistro: formData.fechaRegistro || new Date().toLocaleString('es-CO'),
+    nombreUsuario: formData.nombreUsuario || '',
+    relatoHechos: formData.relatoHechos || '',
+    observaciones: formData.observaciones || '',
+    pretensiones: formData.pretensiones || '',
+    sede: formData.sede || '',
+    attachments: formData.attachments || [],
+    history: formData.history || [],
+  }
+
+  createCase(newCase)
+  return newCase
+}
+
 
 export function addCaseHistory(codigo, entry) {
   const cases = getCases()
