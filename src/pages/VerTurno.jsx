@@ -17,6 +17,29 @@ const DOCUMENT_TYPES = [
   'NIT',
 ]
 
+const PROFESORES = [
+  'Seleccionar...',
+  'ISABELLA RIOS',
+  'NATHALIA FUENTES',
+  'JUAN PEREZ',
+]
+
+const AREAS_DERECHO = [
+  'Seleccionar...',
+  'Derecho laboral',
+  'Derecho civil',
+  'Derecho penal',
+  'Derecho de familia',
+]
+
+const TIPOS_NEGOCIO = [
+  'Seleccionar...',
+  'Consulta',
+  'Demanda',
+  'Asesoría',
+  'Conciliación',
+]
+
 export default function VerTurno() {
   const navigate = useNavigate()
   const { id } = useParams()
@@ -26,10 +49,10 @@ export default function VerTurno() {
   const [form, setForm] = useState({})
   const [caseForm, setCaseForm] = useState({
     relato: '',
-    profesorConsultor: '',
+    profesorConsultor: 'Seleccionar...',
     sede: '',
-    areaDerecho: '',
-    tipoNegocio: '',
+    areaDerecho: 'Seleccionar...',
+    tipoNegocio: 'Seleccionar...',
   })
   const [pretForm, setPretForm] = useState({
     pretensiones: '',
@@ -60,34 +83,58 @@ export default function VerTurno() {
   }
 
   function handleCreateCase() {
-  const session = getSession()
+    const session = getSession()
 
-  const newCase = createCaseFromTurn({
-    userCode: form.numeroDocumento || turn.userCode || '',
-    tipo: caseForm.areaDerecho || caseForm.tipoNegocio || '',
-    estudianteRegistra: session?.name || 'Desconocido',
-    estudianteAsignado: pretForm.asignarA || '',
-    fechaRegistro: turn.fecha || new Date().toLocaleString('es-CO'),
-    nombreUsuario: getNombreCompleto(),
-    relatoHechos: caseForm.relato || '',
-    observaciones: pretForm.observaciones || '',
-    pretensiones: pretForm.pretensiones || '',
-    sede: caseForm.sede || turn.sede || '',
-    attachments: pretForm.adjuntos
-      ? [
+    const newCase = createCaseFromTurn({
+      userCode: form.numeroDocumento || turn.userCode || '',
+      tipo: caseForm.areaDerecho || caseForm.tipoNegocio || '',
+      estudianteRegistra: session?.name || 'Desconocido',
+      estudianteAsignado: pretForm.asignarA || '',
+      fechaRegistro: turn.fecha || new Date().toLocaleString('es-CO'),
+      nombreUsuario: getNombreCompleto(),
+      relatoHechos: caseForm.relato || '',
+      observaciones: pretForm.observaciones || '',
+      pretensiones: pretForm.pretensiones || '',
+      sede: caseForm.sede || turn.sede || '',
+      attachments: pretForm.adjuntos
+        ? [
           {
             id: Date.now(),
             fecha: new Date().toLocaleString('es-CO'),
             nombre: pretForm.adjuntos.name,
           },
         ]
-      : [],
-    history: [],
-  })
+        : [],
+      history: [],
+    })
 
-  completeTurn(turn.id, newCase.codigo, newCase.numeroCaso, getNombreCompleto())
+    completeTurn(turn.id, newCase.codigo, newCase.numeroCaso, getNombreCompleto())
 
-  navigate(`/casos/${newCase.codigo}`)
+    navigate(`/casos/${newCase.codigo}`)
+  }
+
+  function handleStepTwoNext() {
+  if (!caseForm.relato.trim()) {
+    alert('Debes escribir el relato de los hechos')
+    return
+  }
+
+  if (caseForm.profesorConsultor === 'Seleccionar...') {
+    alert('Debes seleccionar un profesor consultor')
+    return
+  }
+
+  if (caseForm.areaDerecho === 'Seleccionar...') {
+    alert('Debes seleccionar un área del derecho')
+    return
+  }
+
+  if (caseForm.tipoNegocio === 'Seleccionar...') {
+    alert('Debes seleccionar un tipo de negocio')
+    return
+  }
+
+  setStep(3)
 }
 
   if (!turn || !user) {
@@ -152,14 +199,29 @@ export default function VerTurno() {
               rows={8}
             />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5 mt-8">
-              <FormInput label="Profesor Consultor:" value={caseForm.profesorConsultor} onChange={(v) => setCaseForm((p) => ({ ...p, profesorConsultor: v }))} />
+              <FormSelect
+                label="Profesor Consultor:"
+                value={caseForm.profesorConsultor}
+                onChange={(v) => setCaseForm((p) => ({ ...p, profesorConsultor: v }))}
+                options={PROFESORES}
+              />
               <FormSelect label="Sede:" value={caseForm.sede} onChange={(v) => setCaseForm((p) => ({ ...p, sede: v }))} options={['La Umbria - Parque tecnologico', 'Centro', 'Norte']} />
-              <FormInput label="Area del derecho:" value={caseForm.areaDerecho} onChange={(v) => setCaseForm((p) => ({ ...p, areaDerecho: v }))} placeholder="Indicar" />
-              <FormInput label="Tipo de negocio:" value={caseForm.tipoNegocio} onChange={(v) => setCaseForm((p) => ({ ...p, tipoNegocio: v }))} placeholder="Indicar" />
+              <FormSelect
+                label="Área del derecho:"
+                value={caseForm.areaDerecho}
+                onChange={(v) => setCaseForm((p) => ({ ...p, areaDerecho: v }))}
+                options={AREAS_DERECHO}
+              />
+              <FormSelect
+                label="Tipo de negocio:"
+                value={caseForm.tipoNegocio}
+                onChange={(v) => setCaseForm((p) => ({ ...p, tipoNegocio: v }))}
+                options={TIPOS_NEGOCIO}
+              />
             </div>
             <div className="flex justify-between mt-8">
               <OrangeButton variant="primary" onClick={() => setStep(1)}>{'Atr\u00e1s'}</OrangeButton>
-              <OrangeButton onClick={() => setStep(3)}>Crear</OrangeButton>
+              <OrangeButton onClick={handleStepTwoNext}>Siguiente</OrangeButton>
             </div>
           </Panel>
         </BackgroundLayout>
