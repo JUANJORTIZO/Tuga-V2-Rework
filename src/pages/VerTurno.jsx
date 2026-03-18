@@ -18,14 +18,14 @@ const DOCUMENT_TYPES = [
 ]
 
 const PROFESORES = [
-  'Seleccionar...',
+
   'ISABELLA RIOS',
   'NATHALIA FUENTES',
   'JUAN PEREZ',
 ]
 
 const AREAS_DERECHO = [
-  'Seleccionar...',
+
   'Derecho laboral',
   'Derecho civil',
   'Derecho penal',
@@ -33,7 +33,7 @@ const AREAS_DERECHO = [
 ]
 
 const TIPOS_NEGOCIO = [
-  'Seleccionar...',
+
   'Consulta',
   'Demanda',
   'Asesoría',
@@ -41,10 +41,10 @@ const TIPOS_NEGOCIO = [
 ]
 
 const ESTUDIANTES = [
-  'Seleccionar...',
+
   'ISABELLA MOLINA SANCHEZ',
-  'NATHALIA BURBANO DIAZ',
-  'JUAN PEREZ',
+  'CAMILA DIAZ',
+  'JOSE RODRIGUEZ',
 ]
 
 export default function VerTurno() {
@@ -56,17 +56,17 @@ export default function VerTurno() {
   const [form, setForm] = useState({})
   const [caseForm, setCaseForm] = useState({
     relato: '',
-    profesorConsultor: 'Seleccionar...',
+    profesorConsultor: '',
     sede: '',
-    areaDerecho: 'Seleccionar...',
-    tipoNegocio: 'Seleccionar...',
+    areaDerecho: '',
+    tipoNegocio: '',
   })
 
   const [pretForm, setPretForm] = useState({
     pretensiones: '',
     observaciones: '',
     adjuntos: null,
-    asignarA: 'Seleccionar...',
+    asignarA: '',
   })
 
   useEffect(() => {
@@ -127,17 +127,17 @@ export default function VerTurno() {
       return
     }
 
-    if (caseForm.profesorConsultor === 'Seleccionar...') {
+    if (caseForm.profesorConsultor) {
       alert('Debes seleccionar un profesor consultor')
       return
     }
 
-    if (caseForm.areaDerecho === 'Seleccionar...') {
+    if (caseForm.areaDerecho) {
       alert('Debes seleccionar un área del derecho')
       return
     }
 
-    if (caseForm.tipoNegocio === 'Seleccionar...') {
+    if (caseForm.tipoNegocio) {
       alert('Debes seleccionar un tipo de negocio')
       return
     }
@@ -146,7 +146,7 @@ export default function VerTurno() {
   }
 
   function handleStepThreeNext() {
-    if (pretForm.asignarA === 'Seleccionar...') {
+    if (!pretForm.asignarA) {
       alert('Debes seleccionar a quién asignar el caso')
       return
     }
