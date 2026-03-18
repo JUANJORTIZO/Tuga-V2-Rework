@@ -18,30 +18,27 @@ const DOCUMENT_TYPES = [
 ]
 
 const PROFESORES = [
-
-  'ISABELLA RIOS',
-  'NATHALIA FUENTES',
+  'ISABELLA MOLINA SANCHEZ',
+  'NATHALIA BURBANO DIAZ',
   'JUAN PEREZ',
 ]
 
-const AREAS_DERECHO = [
-
-  'Derecho laboral',
-  'Derecho civil',
-  'Derecho penal',
-  'Derecho de familia',
-]
-
 const TIPOS_NEGOCIO = [
-
   'Consulta',
   'Demanda',
   'Asesoría',
   'Conciliación',
 ]
 
-const ESTUDIANTES = [
+const AREAS_DERECHO = [
+  'Derecho laboral',
+  'Derecho civil',
+  'Derecho penal',
+  'Derecho de familia',
+]
 
+
+const ESTUDIANTES = [
   'ISABELLA MOLINA SANCHEZ',
   'CAMILA DIAZ',
   'JOSE RODRIGUEZ',
