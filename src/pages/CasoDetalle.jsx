@@ -11,7 +11,10 @@ export default function CasoDetalle() {
   const { codigo } = useParams()
   const [caso, setCaso] = useState(null)
   const [user, setUser] = useState(null)
-  const [historyForm, setHistoryForm] = useState({ verInforme: false, detalle: '', adjunto: null })
+  const [historyForm, setHistoryForm] = useState({
+    detalle: '',
+    adjunto: null
+  })
 
   useEffect(() => {
     loadCase()
@@ -139,7 +142,16 @@ export default function CasoDetalle() {
                 {(caso.history || []).map((h, i) => (
                   <tr key={i} className="hover:bg-gray-50">
                     <td className="border border-gray-300 px-3 py-2 whitespace-nowrap">{h.fecha}</td>
-                    <td className="border border-gray-300 px-3 py-2">{h.estado}</td>
+                    <td className="border border-gray-300 px-3 py-2">
+                      <span
+                        className={`px-2 py-1 rounded text-xs font-semibold ${h.estado === 'COMPLETADO'
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-yellow-100 text-yellow-700'
+                          }`}
+                      >
+                        {h.estado}
+                      </span>
+                    </td>
                     <td className="border border-gray-300 px-3 py-2">{h.abogado}</td>
                     <td className="border border-gray-300 px-3 py-2">{h.detalle}</td>
                     <td className="border border-gray-300 px-3 py-2">{h.remitidoA}</td>
@@ -153,15 +165,6 @@ export default function CasoDetalle() {
           <div className="border border-gray-300 rounded-lg p-6 max-w-xl mx-auto mb-8">
             <h4 className="text-base font-bold text-center text-usb-dark mb-4">{'Agregar Informaci\u00f3n a la Historia'}</h4>
             <form onSubmit={handleAddHistory} className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <label className="text-sm font-semibold text-usb-dark">Ver Informe:</label>
-                <input
-                  type="checkbox"
-                  checked={historyForm.verInforme}
-                  onChange={(e) => setHistoryForm((p) => ({ ...p, verInforme: e.target.checked }))}
-                  className="w-4 h-4 accent-usb-orange cursor-pointer"
-                />
-              </div>
               <div className="flex flex-col gap-1">
                 <label className="text-sm font-semibold text-usb-dark">{'Detalle:(*)'}</label>
                 <textarea
@@ -191,7 +194,7 @@ export default function CasoDetalle() {
           {/* Navigation */}
           <div className="flex justify-between">
             <OrangeButton variant="primary" onClick={() => navigate('/casos')}>{'Atr\u00e1s'}</OrangeButton>
-            <OrangeButton onClick={() => navigate('/')}>Siguiente</OrangeButton>
+            <OrangeButton onClick={() => navigate('/')}>Guardar</OrangeButton>
           </div>
         </Panel>
       </BackgroundLayout>

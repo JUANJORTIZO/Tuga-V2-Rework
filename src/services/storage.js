@@ -300,21 +300,18 @@ export function addCaseHistory(codigo, entry) {
 
   if (idx !== -1) {
     if (!cases[idx].history) cases[idx].history = []
-    if (!cases[idx].attachments) cases[idx].attachments = []
 
-    const historyEntry = {
-      fecha: entry.fecha,
-      estado: entry.estado,
-      abogado: entry.abogado,
-      detalle: entry.detalle,
-      remitidoA: entry.remitidoA || '',
+    // 🔥 NUEVO: marcar el último como COMPLETADO
+    if (cases[idx].history.length > 0) {
+      const lastIndex = cases[idx].history.length - 1
+      cases[idx].history[lastIndex].estado = 'COMPLETADO'
     }
 
-    cases[idx].history.push(historyEntry)
-
-    if (entry.adjunto) {
-      cases[idx].attachments.push(entry.adjunto)
-    }
+    // 🔥 agregar el nuevo como EN PROCESO
+    cases[idx].history.push({
+      ...entry,
+      estado: 'EN PROCESO',
+    })
 
     localStorage.setItem(STORAGE_KEYS.CASES, JSON.stringify(cases))
     return cases[idx]
