@@ -40,6 +40,13 @@ const TIPOS_NEGOCIO = [
   'Conciliación',
 ]
 
+const ESTUDIANTES = [
+  'Seleccionar...',
+  'ISABELLA MOLINA SANCHEZ',
+  'NATHALIA BURBANO DIAZ',
+  'JUAN PEREZ',
+]
+
 export default function VerTurno() {
   const navigate = useNavigate()
   const { id } = useParams()
@@ -54,11 +61,12 @@ export default function VerTurno() {
     areaDerecho: 'Seleccionar...',
     tipoNegocio: 'Seleccionar...',
   })
+
   const [pretForm, setPretForm] = useState({
     pretensiones: '',
     observaciones: '',
     adjuntos: null,
-    asignarA: '',
+    asignarA: 'Seleccionar...',
   })
 
   useEffect(() => {
@@ -114,28 +122,37 @@ export default function VerTurno() {
   }
 
   function handleStepTwoNext() {
-  if (!caseForm.relato.trim()) {
-    alert('Debes escribir el relato de los hechos')
-    return
+    if (!caseForm.relato.trim()) {
+      alert('Debes escribir el relato de los hechos')
+      return
+    }
+
+    if (caseForm.profesorConsultor === 'Seleccionar...') {
+      alert('Debes seleccionar un profesor consultor')
+      return
+    }
+
+    if (caseForm.areaDerecho === 'Seleccionar...') {
+      alert('Debes seleccionar un área del derecho')
+      return
+    }
+
+    if (caseForm.tipoNegocio === 'Seleccionar...') {
+      alert('Debes seleccionar un tipo de negocio')
+      return
+    }
+
+    setStep(3)
   }
 
-  if (caseForm.profesorConsultor === 'Seleccionar...') {
-    alert('Debes seleccionar un profesor consultor')
-    return
-  }
+  function handleStepThreeNext() {
+    if (pretForm.asignarA === 'Seleccionar...') {
+      alert('Debes seleccionar a quién asignar el caso')
+      return
+    }
 
-  if (caseForm.areaDerecho === 'Seleccionar...') {
-    alert('Debes seleccionar un área del derecho')
-    return
+    setStep(4)
   }
-
-  if (caseForm.tipoNegocio === 'Seleccionar...') {
-    alert('Debes seleccionar un tipo de negocio')
-    return
-  }
-
-  setStep(3)
-}
 
   if (!turn || !user) {
     return (
@@ -259,11 +276,16 @@ export default function VerTurno() {
                   className="text-sm text-usb-dark file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-usb-gray-input file:text-usb-dark hover:file:bg-usb-orange/10 cursor-pointer"
                 />
               </div>
-              <FormInput label="Asignar a:" value={pretForm.asignarA} onChange={(v) => setPretForm((p) => ({ ...p, asignarA: v }))} placeholder="Indicar" />
+              <FormSelect
+                label="Asignar a:"
+                value={pretForm.asignarA}
+                onChange={(v) => setPretForm((p) => ({ ...p, asignarA: v }))}
+                options={ESTUDIANTES}
+              />
             </div>
             <div className="flex justify-between mt-8">
               <OrangeButton variant="primary" onClick={() => setStep(2)}>{'Atr\u00e1s'}</OrangeButton>
-              <OrangeButton onClick={() => setStep(4)}>Siguiente</OrangeButton>
+              <OrangeButton onClick={handleStepThreeNext}>Siguiente</OrangeButton>
             </div>
           </Panel>
         </BackgroundLayout>
