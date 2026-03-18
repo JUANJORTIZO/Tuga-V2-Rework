@@ -322,3 +322,29 @@ export function addCaseHistory(codigo, entry) {
 
   return null
 }
+
+export function completeTurn(turnId, caseCode, caseNumber, userName) {
+  const turns = JSON.parse(localStorage.getItem(STORAGE_KEYS.TURNS) || '[]')
+
+  const updatedTurns = turns.map((turn) =>
+    String(turn.id) === String(turnId)
+      ? {
+          ...turn,
+          estado: 'ATENDIDO',
+          caseCode,
+          caseNumber,
+          userName,
+        }
+      : turn
+  )
+
+  localStorage.setItem(STORAGE_KEYS.TURNS, JSON.stringify(updatedTurns))
+
+  return updatedTurns.find((turn) => String(turn.id) === String(turnId)) || null
+}
+/*
+export function deleteTurn(id) {
+  const turns = JSON.parse(localStorage.getItem(STORAGE_KEYS.TURNS) || '[]')
+  const updated = turns.filter((t) => String(t.id) !== String(id))
+  localStorage.setItem(STORAGE_KEYS.TURNS, JSON.stringify(updated))
+} */

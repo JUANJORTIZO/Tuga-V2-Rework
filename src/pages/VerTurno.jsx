@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getTurnById, getUserByCode, updateTurn, createCaseFromTurn, getSession } from '../services/storage'
+import { getTurnById, getUserByCode, updateTurn, createCaseFromTurn, getSession, completeTurn } from '../services/storage'
 import Navbar from '../components/Navbar'
 import BackgroundLayout from '../components/BackgroundLayout'
 import Panel from '../components/Panel'
@@ -84,6 +84,8 @@ export default function VerTurno() {
       : [],
     history: [],
   })
+
+  completeTurn(turn.id, newCase.codigo, newCase.numeroCaso, getNombreCompleto())
 
   navigate(`/casos/${newCase.codigo}`)
 }
