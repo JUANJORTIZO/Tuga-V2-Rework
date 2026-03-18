@@ -28,17 +28,9 @@ export default function Turnos() {
       <Navbar />
       <BackgroundLayout>
         <Panel>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
-            <h2 className="text-2xl md:text-3xl font-serif-title text-center md:text-left">
-              Turnos
-            </h2>
-
-            <div className="flex justify-center md:justify-end">
-              <OrangeButton onClick={() => navigate('/historial-turnos')}>
-                Historial de turnos
-              </OrangeButton>
-            </div>
-          </div>
+          <h2 className="text-2xl md:text-3xl font-serif-title text-center mb-8">
+            Turnos
+          </h2>
 
           {turnsWithUsers.length === 0 ? (
             <p className="text-center text-usb-text-gray py-8">No hay turnos pendientes</p>
@@ -93,9 +85,13 @@ export default function Turnos() {
             </>
           )}
 
-          <div className="mt-8">
+          <div className="mt-8 flex justify-between items-center">
             <OrangeButton variant="primary" onClick={() => navigate('/')}>
               {'Atrás'}
+            </OrangeButton>
+
+            <OrangeButton onClick={() => navigate('/historial-turnos')}>
+              Historial de turnos
             </OrangeButton>
           </div>
         </Panel>
