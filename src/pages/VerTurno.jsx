@@ -124,17 +124,17 @@ export default function VerTurno() {
       return
     }
 
-    if (caseForm.profesorConsultor) {
+    if (!caseForm.profesorConsultor || caseForm.profesorConsultor === 'Seleccionar') {
       alert('Debes seleccionar un profesor consultor')
       return
     }
 
-    if (caseForm.areaDerecho) {
+    if (!caseForm.areaDerecho || caseForm.areaDerecho === 'Seleccionar') {
       alert('Debes seleccionar un área del derecho')
       return
     }
 
-    if (caseForm.tipoNegocio) {
+    if (!caseForm.tipoNegocio || caseForm.tipoNegocio === 'Seleccionar') {
       alert('Debes seleccionar un tipo de negocio')
       return
     }
