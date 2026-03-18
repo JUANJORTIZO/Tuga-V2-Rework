@@ -28,7 +28,7 @@ export default function Login() {
         <div className="w-full max-w-md mx-auto">
           <div className="bg-white rounded-2xl shadow-xl p-8 md:p-10">
             <h1 className="text-3xl md:text-4xl font-bold text-center text-usb-dark font-serif-title mb-8">
-              {'!Inicio sesion!'}
+              {'¡Inicio sesion!'}
             </h1>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-6">

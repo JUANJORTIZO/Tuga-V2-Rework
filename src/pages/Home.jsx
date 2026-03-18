@@ -15,7 +15,7 @@ export default function Home() {
       <BackgroundLayout>
         <div className="flex flex-col items-center gap-12">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white font-serif-title text-center drop-shadow-lg text-balance">
-            {'!Bienvenido, '}{session?.name || 'Usuario'}{'!'}
+            {'¡Bienvenido, '}{session?.name || 'Usuario'}{'!'}
           </h1>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-6 max-w-5xl mx-auto">
