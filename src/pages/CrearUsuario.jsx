@@ -157,15 +157,6 @@ export default function CrearUsuario() {
     navigate(`/turnos/${newTurn.id}`)
   }
 
-  function handleCreateTurn() {
-    const newTurn = createTurn(buildTurnData())
-    navigate('/turnos')
-  }
-
-  function handleRegisterCase() {
-    const newTurn = createTurn(buildTurnData())
-    navigate(`/turnos/${newTurn.id}`)
-  }
 
   return (
     <div className="min-h-screen flex flex-col">
