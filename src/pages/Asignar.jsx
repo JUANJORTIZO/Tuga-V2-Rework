@@ -13,23 +13,24 @@ export default function Asignar() {
       <BackgroundLayout>
         <div className="flex justify-center items-center">
           <div className="flex flex-col md:flex-row items-center gap-6">
-
+            
             <ActionCard
               icon={<UserPlus size={48} strokeWidth={2} />}
               label="Crear usuario"
               onClick={() => navigate('/asignar/crear-usuario')}
             />
 
-            <div className="flex items-stretch gap-4">
+            <div className="flex items-center gap-4">
               <ActionCard
                 icon={<User size={48} strokeWidth={2} />}
                 label="Usuario creado"
                 onClick={() => navigate('/asignar/usuario-creado')}
               />
 
+              {/* Tarjeta vertical pequeña */}
               <button
                 onClick={() => navigate('/turnos')}
-                className="w-[90px] md:w-[100px] rounded-2xl border-4 border-white bg-usb-orange text-white shadow-lg hover:scale-105 transition-transform flex flex-col items-center justify-center gap-4 h-full"
+                className="h-[230px] w-[90px] md:w-[100px] rounded-2xl border-4 border-white bg-usb-orange text-white shadow-lg hover:scale-105 transition-transform flex flex-col items-center justify-center gap-4"
               >
                 <CalendarDays size={34} strokeWidth={2.2} />
                 <span className="text-sm font-bold text-center leading-tight px-2">
