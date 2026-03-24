@@ -33,8 +33,9 @@ export default function App() {
       <Route path="/turnos/:id" element={<ProtectedRoute><VerTurno /></ProtectedRoute>} />
       <Route path="/casos" element={<ProtectedRoute><BuscarCaso /></ProtectedRoute>} />
       <Route path="/casos/:codigo" element={<ProtectedRoute><CasoDetalle /></ProtectedRoute>} />
-      <Route path="*" element={<Navigate to="/" replace />} />
       <Route path="/historial-turnos" element={<ProtectedRoute><HistorialTurnos /></ProtectedRoute>} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+      
     </Routes>
   )
 }
