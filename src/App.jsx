@@ -8,7 +8,7 @@ import UsuarioCreado from './pages/UsuarioCreado'
 import TurnoAsignado from './pages/TurnoAsignado'
 import Turnos from './pages/Turnos'
 import VerTurno from './pages/VerTurno'
-import BuscarCaso from './pages/BuscarCaso'
+import Casos from './pages/Casos'
 import CasoDetalle from './pages/CasoDetalle'
 import HistorialTurnos from './pages/HistorialTurnos'
 
@@ -31,7 +31,7 @@ export default function App() {
       <Route path="/asignar/turno-asignado" element={<ProtectedRoute><TurnoAsignado /></ProtectedRoute>} />
       <Route path="/turnos" element={<ProtectedRoute><Turnos /></ProtectedRoute>} />
       <Route path="/turnos/:id" element={<ProtectedRoute><VerTurno /></ProtectedRoute>} />
-      <Route path="/casos" element={<ProtectedRoute><BuscarCaso /></ProtectedRoute>} />
+      <Route path="/casos" element={<ProtectedRoute><Casos /></ProtectedRoute>} />
       <Route path="/casos/:codigo" element={<ProtectedRoute><CasoDetalle /></ProtectedRoute>} />
       <Route path="/historial-turnos" element={<ProtectedRoute><HistorialTurnos /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />

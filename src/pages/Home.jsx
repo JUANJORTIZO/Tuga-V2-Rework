@@ -31,7 +31,7 @@ export default function Home() {
             />
             <ActionCard
               icon={<Search size={48} strokeWidth={2} />}
-              label="Buscar un Caso"
+              label="Casos"
               onClick={() => navigate('/casos')}
             />
           </div>
