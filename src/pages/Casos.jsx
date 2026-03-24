@@ -47,12 +47,13 @@ export default function Casos() {
                             Casos
                         </h2>
 
-                        <div className="w-full md:w-[420px] md:absolute md:right-0 md:top-0 mt-4 md:mt-0">
-                            <FormInput
-                                label="Buscar caso:"
+                        <div className="w-full md:w-[320px] md:absolute md:right-0 md:top-0 mt-4 md:mt-0">
+                            <input
+                                type="text"
                                 value={search}
-                                onChange={setSearch}
-                                placeholder="Buscar por código, número del caso, usuario o tipo"
+                                onChange={(e) => setSearch(e.target.value)}
+                                placeholder="Buscar caso..."
+                                className="w-full px-4 py-2 rounded-lg bg-usb-gray-input text-sm text-usb-dark placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-usb-orange/40"
                             />
                         </div>
                     </div>
