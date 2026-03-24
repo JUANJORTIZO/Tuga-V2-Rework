@@ -12,7 +12,7 @@ export default function Asignar() {
       <Navbar />
       <BackgroundLayout>
         <div className="flex justify-center items-center">
-          <div className="flex flex-col md:flex-row items-stretch gap-6">
+          <div className="flex flex-col md:flex-row items-stretch gap-10">
 
             <ActionCard
               icon={<UserPlus size={48} strokeWidth={2} />}
@@ -20,7 +20,7 @@ export default function Asignar() {
               onClick={() => navigate('/asignar/crear-usuario')}
             />
 
-            <div className="flex items-stretch gap-4">
+            <div className="flex items-stretch gap-6">
               <ActionCard
                 icon={<User size={48} strokeWidth={2} />}
                 label="Usuario creado"
