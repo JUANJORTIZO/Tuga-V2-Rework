@@ -75,7 +75,7 @@ export default function Casos() {
                             {filteredCases.map((caso) => (
                                 <div
                                     key={caso.codigo}
-                                    className="grid grid-cols-1 md:grid-cols-[90px_150px_180px_1fr_80px] gap-4 items-center py-3 border-b border-gray-100"
+                                    className="grid grid-cols-1 md:grid-cols-[110px_180px_1fr_1fr_80px] gap-4 items-center py-3 border-b border-gray-100"
                                 >
                                     <div className="flex items-center gap-2 md:block">
                                         <span className="md:hidden font-bold text-usb-dark text-sm">Código:</span>
