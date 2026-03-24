@@ -33,7 +33,7 @@ export default function Asignar() {
               >
                 <CalendarDays size={34} strokeWidth={2.2} />
                 <span className="text-sm font-bold text-center leading-tight px-2">
-                  Ver turnos
+                  turnos
                 </span>
               </button>
             </div>

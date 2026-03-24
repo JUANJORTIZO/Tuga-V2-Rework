@@ -89,10 +89,6 @@ export default function Turnos() {
             <OrangeButton variant="primary" onClick={() => navigate('/')}>
               {'Atrás'}
             </OrangeButton>
-
-            <OrangeButton onClick={() => navigate('/historial-turnos')}>
-              Historial de turnos
-            </OrangeButton>
           </div>
         </Panel>
       </BackgroundLayout>
