@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { createUser, createTurn } from '../services/storage'
+import { createUser, createTurn, getUserByCode, createTurn } from '../services/storage'
 import Navbar from '../components/Navbar'
 import BackgroundLayout from '../components/BackgroundLayout'
 import Panel from '../components/Panel'
@@ -115,7 +115,7 @@ export default function CrearUsuario() {
                   Crear turno
                 </OrangeButton>
 
-                <OrangeButton onClick={handleCreateCase}>
+                <OrangeButton onClick={handleRegisterCase}>
                   Registrar caso
                 </OrangeButton>
               </div>
@@ -141,6 +141,26 @@ export default function CrearUsuario() {
     // o si no:
     // alert('Caso creado')
   }
+
+  function buildTurnData() {
+    return {
+      userCode: form.numeroDocumento,
+      sede: 'La Umbria - Parque tecnologico',
+      tipo: '',
+      fecha: new Date().toISOString().split('T')[0],
+    }
+  }
+
+  function handleCreateTurn() {
+    const newTurn = createTurn(buildTurnData())
+    navigate('/turnos')
+  }
+
+  function handleRegisterCase() {
+    const newTurn = createTurn(buildTurnData())
+    navigate(`/turnos/${newTurn.id}`)
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
