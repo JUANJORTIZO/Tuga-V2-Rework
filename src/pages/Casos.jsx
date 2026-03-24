@@ -64,7 +64,7 @@ export default function Casos() {
                         </p>
                     ) : (
                         <>
-                            <div className="hidden md:grid-cols-[90px_150px_180px_1fr_80px] gap-4 mb-4">
+                            <div className="hidden md:grid grid-cols-[110px_180px_1fr_1fr_80px] gap-4 mb-4">
                                 <span className="font-bold text-usb-dark">Código</span>
                                 <span className="font-bold text-usb-dark">Número del caso</span>
                                 <span className="font-bold text-usb-dark">Usuario</span>
