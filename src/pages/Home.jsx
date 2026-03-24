@@ -13,24 +13,30 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <BackgroundLayout>
-        <div className="flex flex-col justify-center items-center min-h-[calc(100vh-70px)] gap-12">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white font-serif-title text-center drop-shadow-lg text-balance">
+        <div className="min-h-[calc(100vh-70px)] flex flex-col items-center justify-center px-4">
+
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white font-serif-title text-center drop-shadow-lg mb-10">
             {'¡Bienvenido, '}{session?.name || 'Usuario'}{'!'}
           </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-6 max-w-5xl mx-auto">
-            <ActionCard
-              icon={<Pencil size={48} strokeWidth={2} />}
-              label="Asignar Casos"
-              onClick={() => navigate('/asignar')}
-            />
+          <div className="w-full flex justify-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
 
-            <ActionCard
-              icon={<Search size={48} strokeWidth={2} />}
-              label="Ver Casos"
-              onClick={() => navigate('/casos')}
-            />
+              <ActionCard
+                icon={<Pencil size={48} strokeWidth={2} />}
+                label="Asignar Casos"
+                onClick={() => navigate('/asignar')}
+              />
+
+              <ActionCard
+                icon={<Search size={48} strokeWidth={2} />}
+                label="Ver Casos"
+                onClick={() => navigate('/casos')}
+              />
+
+            </div>
           </div>
+
         </div>
       </BackgroundLayout>
     </div>
