@@ -126,29 +126,35 @@ export default function CrearUsuario() {
     )
   }
 
-  function handleCreateTurn() {
-    // 👉 aquí va tu lógica actual de crear turno
-    alert('Turno creado')
-
-    navigate('/turnos')
-  }
-
-  function handleCreateCase() {
-    // 👉 aquí llamas la lógica que ya tienes para crear caso
-    // por ejemplo si ya tienes handleCreate:
-    handleCreate()
-
-    // o si no:
-    // alert('Caso creado')
-  }
-
-  function buildTurnData() {
+  function buildTurnData(userCode) {
     return {
-      userCode: form.numeroDocumento,
+      userCode,
       sede: 'La Umbria - Parque tecnologico',
-      tipo: '',
+      tipo: 'General',
       fecha: new Date().toISOString().split('T')[0],
     }
+  }
+
+  function handleCreateTurn() {
+    const newUser = createUser(form)
+    const newTurn = createTurn(buildTurnData(newUser.code))
+
+    navigate('/asignar/turno-asignado', {
+      state: {
+        code: newUser.code,
+        turnId: newTurn.id,
+        tipoDocumento: newUser.tipoDocumento,
+        numeroDocumento: newUser.numeroDocumento,
+        nombre: `${newUser.apellidos} ${newUser.nombres}`,
+      },
+    })
+  }
+
+  function handleRegisterCase() {
+    const newUser = createUser(form)
+    const newTurn = createTurn(buildTurnData(newUser.code))
+
+    navigate(`/turnos/${newTurn.id}`)
   }
 
   function handleCreateTurn() {
