@@ -21,17 +21,13 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-6 max-w-5xl mx-auto">
             <ActionCard
               icon={<Pencil size={48} strokeWidth={2} />}
-              label="Asignar Turnos"
+              label="Asignar Casos"
               onClick={() => navigate('/asignar')}
             />
-            <ActionCard
-              icon={<CalendarDays size={48} strokeWidth={2} />}
-              label="Ver Turnos"
-              onClick={() => navigate('/turnos')}
-            />
+            
             <ActionCard
               icon={<Search size={48} strokeWidth={2} />}
-              label="Casos"
+              label="Ver Casos"
               onClick={() => navigate('/casos')}
             />
           </div>
