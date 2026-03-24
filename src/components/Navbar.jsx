@@ -1,9 +1,18 @@
+import { useNavigate } from 'react-router-dom'
+import { logout } from '../services/storage'
 import { Link, useLocation } from 'react-router-dom'
 import { Bell, HelpCircle, Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import { isAuthenticated } from '../services/storage'
 
 export default function Navbar({ variant = 'default' }) {
+
+  const navigate = useNavigate()
+
+  function handleLogout() {
+    logout()
+    navigate('/login')
+  }
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
   const isLogin = variant === 'login'
@@ -47,11 +56,10 @@ export default function Navbar({ variant = 'default' }) {
             <Link
               key={link.to}
               to={link.to}
-              className={`text-lg font-semibold transition-colors hover:text-usb-orange ${
-                location.pathname === link.to || location.pathname.startsWith(link.to + '/')
-                  ? 'text-usb-orange'
-                  : 'text-usb-dark'
-              }`}
+              className={`text-lg font-semibold transition-colors hover:text-usb-orange ${location.pathname === link.to || location.pathname.startsWith(link.to + '/')
+                ? 'text-usb-orange'
+                : 'text-usb-dark'
+                }`}
             >
               {link.label}
             </Link>
@@ -59,8 +67,17 @@ export default function Navbar({ variant = 'default' }) {
         </div>
       )}
 
-      {/* Right: icon button */}
+      {/* Right: icon button + logout */}
       <div className="flex items-center gap-3">
+        {authed && !isLogin && (
+          <button
+            onClick={handleLogout}
+            className="hidden md:inline-flex items-center px-4 py-2 rounded-lg bg-usb-orange text-white font-semibold hover:bg-orange-600 transition-colors"
+          >
+            Cerrar sesión
+          </button>
+        )}
+
         {isLogin ? (
           <button className="w-11 h-11 rounded-full bg-usb-tan/80 flex items-center justify-center text-white hover:bg-usb-tan transition-colors">
             <HelpCircle size={22} />
