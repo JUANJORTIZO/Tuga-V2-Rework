@@ -12,7 +12,7 @@ export default function Asignar() {
       <Navbar />
       <BackgroundLayout>
         <div className="flex justify-center items-center">
-          <div className="flex flex-col md:flex-row items-stretch gap-10">
+          <div className="flex flex-col md:flex-row items-stretch gap-8">
 
             <ActionCard
               icon={<UserPlus size={48} strokeWidth={2} />}
