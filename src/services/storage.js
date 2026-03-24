@@ -159,40 +159,30 @@ function initializeStorage() {
 initializeStorage()
 
 // Auth
-// --- COPIA Y REEMPLAZA ESTE BLOQUE EN storage.js ---
-
-export function getSession() {
-  // Siempre leer de sessionStorage
-  const data = sessionStorage.getItem(STORAGE_KEYS.SESSION)
-  return data ? JSON.parse(data) : null
-}
-
-export function isAuthenticated() {
-  // El chequeo debe ser en el mismo sitio (sessionStorage)
-  return sessionStorage.getItem(STORAGE_KEYS.SESSION) !== null
-}
-
 export function login(username, password) {
-  const admins = getAdmins()
-  const user = admins.find((u) => u.username === username && u.password === password)
-
-  if (user) {
-    const sessionData = { 
-      username: user.username, 
-      name: user.name, 
-      loginTime: new Date().getTime() 
-    }
-    // Guardar en sessionStorage para que sea temporal
-    sessionStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify(sessionData))
-    return { success: true, user }
+  const admin = SEED_DATA.admins.find(
+    (a) => a.username === username && a.password === password
+  )
+  if (admin) {
+    localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify({ username: admin.username, name: admin.name }))
+    return { success: true, user: admin }
   }
   return { success: false }
 }
 
 export function logout() {
-  // Limpiar sessionStorage al salir
-  sessionStorage.removeItem(STORAGE_KEYS.SESSION)
+  localStorage.removeItem(STORAGE_KEYS.SESSION)
 }
+
+export function getSession() {
+  const s = localStorage.getItem(STORAGE_KEYS.SESSION)
+  return s ? JSON.parse(s) : null
+}
+
+export function isAuthenticated() {
+  return !!getSession()
+}
+
 // Users
 export function getUsers() {
   return JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]')
