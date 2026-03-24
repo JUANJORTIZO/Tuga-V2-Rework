@@ -164,25 +164,27 @@ export function login(username, password) {
     (a) => a.username === username && a.password === password
   )
   if (admin) {
-    localStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify({ username: admin.username, name: admin.name }))
+    sessionStorage.setItem(
+      STORAGE_KEYS.SESSION,
+      JSON.stringify({ username: admin.username, name: admin.name })
+    )
     return { success: true, user: admin }
   }
   return { success: false }
 }
 
 export function logout() {
-  localStorage.removeItem(STORAGE_KEYS.SESSION)
+  sessionStorage.removeItem(STORAGE_KEYS.SESSION)
 }
 
 export function getSession() {
-  const s = localStorage.getItem(STORAGE_KEYS.SESSION)
+  const s = sessionStorage.getItem(STORAGE_KEYS.SESSION)
   return s ? JSON.parse(s) : null
 }
 
 export function isAuthenticated() {
   return !!getSession()
 }
-
 // Users
 export function getUsers() {
   return JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]')
