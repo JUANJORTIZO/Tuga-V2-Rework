@@ -13,7 +13,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <BackgroundLayout>
-        <div className="flex flex-col items-center gap-12">
+        <div className="flex flex-col justify-center items-center min-h-[calc(100vh-70px)] gap-12">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white font-serif-title text-center drop-shadow-lg text-balance">
             {'¡Bienvenido, '}{session?.name || 'Usuario'}{'!'}
           </h1>
@@ -24,7 +24,7 @@ export default function Home() {
               label="Asignar Casos"
               onClick={() => navigate('/asignar')}
             />
-            
+
             <ActionCard
               icon={<Search size={48} strokeWidth={2} />}
               label="Ver Casos"
