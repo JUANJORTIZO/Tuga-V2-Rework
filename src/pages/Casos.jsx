@@ -94,14 +94,18 @@ export default function Casos() {
                                     <div className="flex items-center gap-2 md:block">
                                         <span className="md:hidden font-bold text-usb-dark text-sm">Usuario:</span>
                                         <span className="bg-usb-gray-input rounded-lg px-4 py-2 text-sm text-usb-dark inline-block w-full">
-                                            {caso.userName}
+                                            <span className="truncate block">
+                                                {caso.userName}
+                                            </span>
                                         </span>
                                     </div>
 
                                     <div className="flex items-center gap-2 md:block">
                                         <span className="md:hidden font-bold text-usb-dark text-sm">Tipo:</span>
                                         <span className="bg-usb-gray-input rounded-lg px-4 py-2 text-sm text-usb-dark inline-block w-full">
-                                            {caso.tipo}
+                                            <span className="block leading-tight">
+                                                {caso.tipo}
+                                            </span>
                                         </span>
                                     </div>
 
