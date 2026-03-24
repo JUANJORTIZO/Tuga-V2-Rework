@@ -67,17 +67,9 @@ export default function Navbar({ variant = 'default' }) {
         </div>
       )}
 
-      {/* Right: icon button + logout */}
       <div className="flex items-center gap-3">
-        {authed && !isLogin && (
-          <button
-            onClick={handleLogout}
-            className="hidden md:inline-flex items-center px-4 py-2 rounded-lg bg-usb-orange text-white font-semibold hover:bg-orange-600 transition-colors"
-          >
-            Cerrar sesión
-          </button>
-        )}
 
+        {/* Campanita */}
         {isLogin ? (
           <button className="w-11 h-11 rounded-full bg-usb-tan/80 flex items-center justify-center text-white hover:bg-usb-tan transition-colors">
             <HelpCircle size={22} />
@@ -85,6 +77,16 @@ export default function Navbar({ variant = 'default' }) {
         ) : (
           <button className="w-11 h-11 rounded-full bg-usb-tan/80 flex items-center justify-center text-white hover:bg-usb-tan transition-colors">
             <Bell size={22} />
+          </button>
+        )}
+
+        {/* Logout */}
+        {authed && !isLogin && (
+          <button
+            onClick={handleLogout}
+            className="hidden md:inline-flex items-center px-4 py-2 rounded-lg bg-usb-orange text-white font-semibold hover:bg-orange-600 transition-colors"
+          >
+            Cerrar sesión
           </button>
         )}
 
