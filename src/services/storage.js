@@ -186,7 +186,6 @@ export function getSession() {
 }
 
 export function isAuthenticated() {
- 
   return sessionStorage.getItem(STORAGE_KEYS.SESSION) !== null
 }
 // Users
