@@ -12,7 +12,7 @@ export default function Casos() {
     const navigate = useNavigate()
     const [search, setSearch] = useState('')
 
-    const cases = getCases()
+    const cases = getCases().filter((c) => c.estado === 'EN_CURSO' || !c.estado)
 
     const casesWithUsers = cases.map((c) => {
         const user = getUserByCode(c.userCode)
@@ -126,10 +126,17 @@ export default function Casos() {
                         </>
                     )}
 
-                    <div className="mt-8">
+                    <div className="flex justify-between items-center mt-8">
                         <OrangeButton variant="primary" onClick={() => navigate('/')}>
                             {'Atrás'}
                         </OrangeButton>
+
+                        <button
+                            onClick={() => navigate('/casos/historial')}
+                            className="px-6 py-3 rounded-xl bg-usb-orange text-white font-bold hover:bg-orange-600 transition-colors shadow-md"
+                        >
+                            Historial de casos
+                        </button>
                     </div>
                 </Panel>
             </BackgroundLayout>

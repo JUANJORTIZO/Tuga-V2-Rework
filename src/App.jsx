@@ -11,6 +11,7 @@ import VerTurno from './pages/VerTurno'
 import Casos from './pages/Casos'
 import CasoDetalle from './pages/CasoDetalle'
 import HistorialTurnos from './pages/HistorialTurnos'
+import HistorialCasos from './pages/HistorialCasos'
 
 
 function ProtectedRoute({ children }) {
@@ -35,7 +36,14 @@ export default function App() {
       <Route path="/casos/:codigo" element={<ProtectedRoute><CasoDetalle /></ProtectedRoute>} />
       <Route path="/historial-turnos" element={<ProtectedRoute><HistorialTurnos /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
-      
+      <Route
+        path="/casos/historial"
+        element={
+          <ProtectedRoute>
+            <HistorialCasos />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   )
 }

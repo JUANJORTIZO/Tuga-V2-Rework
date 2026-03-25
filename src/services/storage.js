@@ -123,6 +123,7 @@ const SEED_DATA = {
       estudianteRegistra: 'Isabella Fuentes Rodallega',
       estudianteAsignado: '',
       fechaRegistro: '14-08-2025 20:02',
+      estado: 'EN_CURSO',
       relato: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.',
       observaciones: '',
       pretensiones: '',
@@ -297,6 +298,7 @@ export function createCaseFromTurn(formData) {
     sede: formData.sede || '',
     attachments: formData.attachments || [],
     history: formData.history || [],
+    estado: 'EN_CURSO',
   }
 
   createCase(newCase)
@@ -360,6 +362,23 @@ export function updateCase(codigo, updatedCase) {
   localStorage.setItem(STORAGE_KEYS.CASES, JSON.stringify(cases))
   return updatedCase
 }
+
+export function closeCase(codigo) {
+  const cases = getCases()
+  const index = cases.findIndex((c) => String(c.codigo) === String(codigo))
+
+  if (index === -1) return null
+
+  cases[index] = {
+    ...cases[index],
+    estado: 'CERRADO',
+    fechaCierre: new Date().toLocaleString('es-CO'),
+  }
+
+  localStorage.setItem(STORAGE_KEYS.CASES, JSON.stringify(cases))
+  return cases[index]
+}
+
 /*
 export function deleteTurn(id) {
   const turns = JSON.parse(localStorage.getItem(STORAGE_KEYS.TURNS) || '[]')

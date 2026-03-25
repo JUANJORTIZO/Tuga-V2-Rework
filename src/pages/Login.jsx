@@ -52,9 +52,7 @@ export default function Login() {
                   placeholder="Escribir"
                   className="w-full px-4 py-3 bg-usb-gray-input rounded-lg text-base text-usb-dark placeholder:text-usb-text-gray focus:outline-none focus:ring-2 focus:ring-usb-orange/40"
                 />
-                <button type="button" className="text-sm text-usb-orange hover:underline self-start mt-1 cursor-pointer">
-                  {'Olvid\u00e9 mi contrase\u00f1a'}
-                </button>
+
               </div>
 
               {error && (

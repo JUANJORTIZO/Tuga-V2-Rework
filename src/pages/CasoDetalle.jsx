@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getCaseByCode, getUserByCode, addCaseHistory, getSession, updateCase } from '../services/storage'
+import { getCaseByCode, getUserByCode, addCaseHistory, getSession, updateCase, closeCase } from '../services/storage'
 import Navbar from '../components/Navbar'
 import BackgroundLayout from '../components/BackgroundLayout'
 import Panel from '../components/Panel'
@@ -16,6 +16,14 @@ export default function CasoDetalle() {
     adjunto: null
   })
 
+  function handleCloseCase() {
+    const confirmed = window.confirm('¿Estás seguro de que deseas cerrar este caso?')
+    if (!confirmed) return
+
+    closeCase(codigo)
+    navigate('/casos/historial')
+  }
+
   useEffect(() => {
     loadCase()
   }, [codigo])
@@ -30,52 +38,52 @@ export default function CasoDetalle() {
   }
 
   function handleAddHistory(e) {
-  e.preventDefault()
+    e.preventDefault()
 
-  if (!historyForm.detalle.trim()) {
-    alert('El campo Detalle es obligatorio')
-    return
-  }
+    if (!historyForm.detalle.trim()) {
+      alert('El campo Detalle es obligatorio')
+      return
+    }
 
-  const session = getSession()
-  const now = new Date()
+    const session = getSession()
+    const now = new Date()
 
-  const fecha = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
+    const fecha = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
 
-  const nuevoAdjunto = historyForm.adjunto
-    ? {
+    const nuevoAdjunto = historyForm.adjunto
+      ? {
         id: Date.now(),
         fecha,
         nombre: historyForm.adjunto.name,
         url: URL.createObjectURL(historyForm.adjunto),
       }
-    : null
+      : null
 
-  addCaseHistory(codigo, {
-    fecha,
-    estado: 'EN PROCESO',
-    abogado: session?.name || 'Desconocido',
-    detalle: historyForm.detalle,
-    remitidoA: '',
-    adjunto: nuevoAdjunto,
-  })
+    addCaseHistory(codigo, {
+      fecha,
+      estado: 'EN PROCESO',
+      abogado: session?.name || 'Desconocido',
+      detalle: historyForm.detalle,
+      remitidoA: '',
+      adjunto: nuevoAdjunto,
+    })
 
-  if (nuevoAdjunto) {
-    const casoActual = getCaseByCode(codigo)
+    if (nuevoAdjunto) {
+      const casoActual = getCaseByCode(codigo)
 
-    if (casoActual) {
-      const updatedCase = {
-        ...casoActual,
-        attachments: [...(casoActual.attachments || []), nuevoAdjunto],
+      if (casoActual) {
+        const updatedCase = {
+          ...casoActual,
+          attachments: [...(casoActual.attachments || []), nuevoAdjunto],
+        }
+
+        updateCase(codigo, updatedCase)
       }
-
-      updateCase(codigo, updatedCase)
     }
-  }
 
-  setHistoryForm({ verInforme: false, detalle: '', adjunto: null })
-  loadCase()
-}
+    setHistoryForm({ verInforme: false, detalle: '', adjunto: null })
+    loadCase()
+  }
 
   if (!caso) {
     return (
@@ -162,8 +170,8 @@ export default function CasoDetalle() {
                     <td className="border border-gray-300 px-3 py-2">
                       <span
                         className={`px-2 py-1 rounded text-xs font-semibold ${h.estado === 'COMPLETADO'
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-yellow-100 text-yellow-700'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-yellow-100 text-yellow-700'
                           }`}
                       >
                         {h.estado}
@@ -212,6 +220,12 @@ export default function CasoDetalle() {
           <div className="flex justify-between">
             <OrangeButton variant="primary" onClick={() => navigate('/casos')}>{'Atr\u00e1s'}</OrangeButton>
             <OrangeButton onClick={() => navigate('/')}>Guardar</OrangeButton>
+            <button
+              onClick={handleCloseCase}
+              className="px-6 py-3 rounded-xl bg-red-600 text-white font-bold hover:bg-red-700 transition-colors shadow-md"
+            >
+              Cerrar caso
+            </button>
           </div>
         </Panel>
       </BackgroundLayout>
