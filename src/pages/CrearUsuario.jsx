@@ -234,6 +234,7 @@ export default function CrearUsuario() {
               onChange={updateField('departamento')}
               options={DEPARTAMENTOS}
             />
+            <FormInput label="Municipio:" value={form.municipio} onChange={updateField('municipio')} />
             <FormSelect
               label="Estrato:"
               value={form.estrato}
