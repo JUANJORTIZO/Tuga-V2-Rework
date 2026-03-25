@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { createUser, createTurn } from '../services/storage'
 import Navbar from '../components/Navbar'
@@ -15,6 +15,7 @@ const DOCUMENT_TYPES = [
   'Pasaporte',
   'NIT',
 ]
+
 const GENEROS = [
   'Masculino',
   'Femenino',
@@ -59,6 +60,7 @@ const DEPARTAMENTOS = [
   'Santander',
   'Otro',
 ]
+
 const initialForm = {
   tipoDocumento: '',
   numeroDocumento: '',
@@ -79,21 +81,32 @@ const initialForm = {
 export default function CrearUsuario() {
   const location = useLocation()
   const navigate = useNavigate()
-  const [step, setStep] = useState(1) // 1 = form, 2 = confirm
+  const [step, setStep] = useState(1)
   const [form, setForm] = useState(initialForm)
+
   const existingUser = location.state?.existingUser || null
 
   useEffect(() => {
-    if (location.state?.existingUser) {
-      setForm(location.state.existingUser)
+    if (existingUser) {
+      setForm((prev) => ({
+        ...prev,
+        tipoDocumento: existingUser.tipoDocumento || '',
+        numeroDocumento: existingUser.numeroDocumento || '',
+        lugarExpedicion: existingUser.lugarExpedicion || '',
+        nombres: existingUser.nombres || '',
+        apellidos: existingUser.apellidos || '',
+        genero: existingUser.genero || '',
+        correo: existingUser.correo || '',
+        telefono: existingUser.telefono || '',
+        direccion: existingUser.direccion || '',
+        departamento: existingUser.departamento || '',
+        municipio: existingUser.municipio || '',
+        estrato: existingUser.estrato || '',
+        poblacionVulnerable: existingUser.poblacionVulnerable || '',
+        estadoCivil: existingUser.estadoCivil || '',
+      }))
     }
-  }, [location.state])
-
-  function getCurrentUser() {
-    if (existingUser) return existingUser
-    return createUser(form)
-  }
-
+  }, [existingUser])
 
   function updateField(field) {
     return (value) => setForm((prev) => ({ ...prev, [field]: value }))
@@ -104,11 +117,19 @@ export default function CrearUsuario() {
       alert('Por favor complete los campos obligatorios: Tipo de documento, Numero, Nombres y Apellidos')
       return
     }
+
+    if (!form.genero || !form.departamento || !form.estrato || !form.poblacionVulnerable || !form.estadoCivil) {
+      alert('Por favor complete los campos de selección obligatorios')
+      return
+    }
+
     setStep(2)
   }
 
-  function handleCreate() {
-    const newUser = createUser({
+  function getCurrentUser() {
+    if (existingUser) return existingUser
+
+    return createUser({
       ...form,
       empresaDondeTrabaja: '',
       direccionEmpresa: '',
@@ -120,66 +141,6 @@ export default function CrearUsuario() {
       tieneViviendaPropia: 'No',
       avaluoCatastral: '',
     })
-
-    const turn = createTurn({
-      userCode: newUser.code,
-      sede: 'La Umbria - Parque tecnologico',
-      tipo: 'General',
-      fecha: new Date().toISOString().split('T')[0],
-    })
-
-    navigate('/asignar/turno-asignado', {
-      state: {
-        code: newUser.code,
-        turnId: turn.id,
-        tipoDocumento: newUser.tipoDocumento,
-        numeroDocumento: newUser.numeroDocumento,
-        nombre: `${newUser.apellidos} ${newUser.nombres}`,
-      },
-    })
-  }
-
-  if (step === 2) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <BackgroundLayout>
-          <Panel>
-            <h2 className="text-2xl md:text-3xl font-serif-title text-center mb-8">Confirmar datos</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-5">
-              <FormInput label="Tipo de documento:" value={form.tipoDocumento} onChange={() => { }} readOnly />
-              <FormInput label="Numero de documento:" value={form.numeroDocumento} onChange={() => { }} readOnly />
-              <FormInput label="Lugar expedicion:" value={form.lugarExpedicion} onChange={() => { }} readOnly />
-              <FormInput label="Nombres:" value={form.nombres} onChange={() => { }} readOnly />
-              <FormInput label="Apellidos:" value={form.apellidos} onChange={() => { }} readOnly />
-              <FormInput label="Genero:" value={form.genero} onChange={() => { }} readOnly />
-              <FormInput label="Correo Electronico:" value={form.correo} onChange={() => { }} readOnly className="md:col-span-2" />
-              <FormInput label="Telefono:" value={form.telefono} onChange={() => { }} readOnly />
-              <FormInput label="Direccion:" value={form.direccion} onChange={() => { }} readOnly />
-              <FormInput label="Departamento:" value={form.departamento} onChange={() => { }} readOnly />
-              <FormInput label="Municipio:" value={form.municipio} onChange={() => { }} readOnly />
-              <FormInput label="Estrato:" value={form.estrato} onChange={() => { }} readOnly />
-              <FormInput label="Poblacion vulnerable:" value={form.poblacionVulnerable} onChange={() => { }} readOnly />
-              <FormInput label="Estado civil:" value={form.estadoCivil} onChange={() => { }} readOnly />
-            </div>
-            <div className="flex justify-between items-center mt-8">
-              <OrangeButton variant="primary" onClick={() => setStep(1)}>
-                Atrás
-              </OrangeButton>
-              <div className="flex gap-4">
-                <OrangeButton onClick={handleCreateTurn}>
-                  Crear turno
-                </OrangeButton>
-
-                <OrangeButton onClick={handleRegisterCase}>
-                  Registrar caso
-                </OrangeButton>
-              </div>
-            </div>
-          </Panel>
-        </BackgroundLayout>
-      </div>
-    )
   }
 
   function buildTurnData(userCode) {
@@ -215,6 +176,51 @@ export default function CrearUsuario() {
     })
   }
 
+  if (step === 2) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <BackgroundLayout>
+          <Panel>
+            <h2 className="text-2xl md:text-3xl font-serif-title text-center mb-8">Confirmar datos</h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-5">
+              <FormInput label="Tipo de documento:" value={form.tipoDocumento} onChange={() => {}} readOnly />
+              <FormInput label="Numero de documento:" value={form.numeroDocumento} onChange={() => {}} readOnly />
+              <FormInput label="Lugar expedicion:" value={form.lugarExpedicion} onChange={() => {}} readOnly />
+              <FormInput label="Nombres:" value={form.nombres} onChange={() => {}} readOnly />
+              <FormInput label="Apellidos:" value={form.apellidos} onChange={() => {}} readOnly />
+              <FormInput label="Genero:" value={form.genero} onChange={() => {}} readOnly />
+              <FormInput label="Correo Electronico:" value={form.correo} onChange={() => {}} readOnly className="md:col-span-2" />
+              <FormInput label="Telefono:" value={form.telefono} onChange={() => {}} readOnly />
+              <FormInput label="Direccion:" value={form.direccion} onChange={() => {}} readOnly />
+              <FormInput label="Departamento:" value={form.departamento} onChange={() => {}} readOnly />
+              <FormInput label="Municipio:" value={form.municipio} onChange={() => {}} readOnly />
+              <FormInput label="Estrato:" value={form.estrato} onChange={() => {}} readOnly />
+              <FormInput label="Poblacion vulnerable:" value={form.poblacionVulnerable} onChange={() => {}} readOnly />
+              <FormInput label="Estado civil:" value={form.estadoCivil} onChange={() => {}} readOnly />
+            </div>
+
+            <div className="flex justify-between items-center mt-8">
+              <OrangeButton variant="primary" onClick={() => setStep(1)}>
+                Atrás
+              </OrangeButton>
+
+              <div className="flex gap-4">
+                <OrangeButton onClick={handleCreateTurn}>
+                  Crear turno
+                </OrangeButton>
+
+                <OrangeButton onClick={handleRegisterCase}>
+                  Registrar caso
+                </OrangeButton>
+              </div>
+            </div>
+          </Panel>
+        </BackgroundLayout>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -222,6 +228,7 @@ export default function CrearUsuario() {
       <BackgroundLayout>
         <Panel>
           <h2 className="text-2xl md:text-3xl font-serif-title text-center mb-8">Datos usuario</h2>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-5">
             <FormSelect
               label="Tipo de documento:"
@@ -229,26 +236,70 @@ export default function CrearUsuario() {
               onChange={updateField('tipoDocumento')}
               options={DOCUMENT_TYPES}
             />
-            <FormInput label="Numero de documento:" value={form.numeroDocumento} onChange={updateField('numeroDocumento')} />
-            <FormInput label="Lugar expedicion:" value={form.lugarExpedicion} onChange={updateField('lugarExpedicion')} />
-            <FormInput label="Nombres:" value={form.nombres} onChange={updateField('nombres')} />
-            <FormInput label="Apellidos:" value={form.apellidos} onChange={updateField('apellidos')} />
+
+            <FormInput
+              label="Numero de documento:"
+              value={form.numeroDocumento}
+              onChange={updateField('numeroDocumento')}
+            />
+
+            <FormInput
+              label="Lugar expedicion:"
+              value={form.lugarExpedicion}
+              onChange={updateField('lugarExpedicion')}
+            />
+
+            <FormInput
+              label="Nombres:"
+              value={form.nombres}
+              onChange={updateField('nombres')}
+            />
+
+            <FormInput
+              label="Apellidos:"
+              value={form.apellidos}
+              onChange={updateField('apellidos')}
+            />
+
             <FormSelect
               label="Genero:"
               value={form.genero}
               onChange={updateField('genero')}
               options={GENEROS}
             />
-            <FormInput label="Correo Electronico:" value={form.correo} onChange={updateField('correo')} className="md:col-span-2" />
-            <FormInput label="Telefono:" value={form.telefono} onChange={updateField('telefono')} />
-            <FormInput label="Direccion:" value={form.direccion} onChange={updateField('direccion')} />
+
+            <FormInput
+              label="Correo Electronico:"
+              value={form.correo}
+              onChange={updateField('correo')}
+              className="md:col-span-2"
+            />
+
+            <FormInput
+              label="Telefono:"
+              value={form.telefono}
+              onChange={updateField('telefono')}
+            />
+
+            <FormInput
+              label="Direccion:"
+              value={form.direccion}
+              onChange={updateField('direccion')}
+            />
+
             <FormSelect
               label="Departamento:"
               value={form.departamento}
               onChange={updateField('departamento')}
               options={DEPARTAMENTOS}
             />
-            <FormInput label="Municipio:" value={form.municipio} onChange={updateField('municipio')} />
+
+            <FormInput
+              label="Municipio:"
+              value={form.municipio}
+              onChange={updateField('municipio')}
+            />
+
             <FormSelect
               label="Estrato:"
               value={form.estrato}
@@ -270,9 +321,15 @@ export default function CrearUsuario() {
               options={ESTADOS_CIVILES}
             />
           </div>
+
           <div className="flex justify-between mt-8">
-            <OrangeButton variant="primary" onClick={() => navigate('/asignar')}>{'Atr\u00e1s'}</OrangeButton>
-            <OrangeButton onClick={handleNext}>Siguiente</OrangeButton>
+            <OrangeButton variant="primary" onClick={() => navigate('/asignar')}>
+              {'Atrás'}
+            </OrangeButton>
+
+            <OrangeButton onClick={handleNext}>
+              Siguiente
+            </OrangeButton>
           </div>
         </Panel>
       </BackgroundLayout>
