@@ -29,18 +29,12 @@ export default function Navbar({ variant = 'default' }) {
     <nav className="sticky top-0 z-50 flex items-center justify-between bg-white/95 backdrop-blur-sm px-4 md:px-8 h-[70px] shadow-sm">
       {/* Left: Logo + Title */}
       <div className="flex items-center gap-3">
-        <div className="w-12 h-12 bg-usb-orange rounded-md flex items-center justify-center flex-shrink-0">
-          <svg viewBox="0 0 40 40" className="w-8 h-8 text-white" fill="currentColor">
-            <circle cx="20" cy="14" r="8" opacity="0.9" />
-            <path d="M8 36c0-8 5.5-14 12-14s12 6 12 14" opacity="0.7" />
-            <rect x="16" y="2" width="8" height="4" rx="1" opacity="0.5" />
-          </svg>
-        </div>
         <div className="flex items-center gap-3">
-          <div className="hidden sm:block">
-            <p className="text-xs font-bold leading-tight tracking-wide text-usb-dark">UNIVERSIDAD DE</p>
-            <p className="text-sm font-bold leading-tight tracking-wide text-usb-dark">SAN BUENAVENTURA</p>
-          </div>
+          <img
+            src="/MarcaUSB_Horizontal.png"
+            alt="Universidad de San Buenaventura"
+            className="hidden sm:block h-12 md:h-14 w-auto object-contain"
+          />
           <div className="hidden sm:block w-px h-10 bg-usb-dark/30" />
           <div className="hidden sm:block">
             <p className="text-sm font-bold leading-tight text-usb-dark">CONSULTORIO</p>
