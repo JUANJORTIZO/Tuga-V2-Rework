@@ -81,7 +81,9 @@ const initialForm = {
 export default function CrearUsuario() {
   const location = useLocation()
   const navigate = useNavigate()
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(
+    location.state?.startInConfirm ? 2 : 1
+  )
   const [form, setForm] = useState(initialForm)
 
   const existingUser = location.state?.existingUser || null
@@ -185,20 +187,20 @@ export default function CrearUsuario() {
             <h2 className="text-2xl md:text-3xl font-serif-title text-center mb-8">Confirmar datos</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-5">
-              <FormInput label="Tipo de documento:" value={form.tipoDocumento} onChange={() => {}} readOnly />
-              <FormInput label="Numero de documento:" value={form.numeroDocumento} onChange={() => {}} readOnly />
-              <FormInput label="Lugar expedicion:" value={form.lugarExpedicion} onChange={() => {}} readOnly />
-              <FormInput label="Nombres:" value={form.nombres} onChange={() => {}} readOnly />
-              <FormInput label="Apellidos:" value={form.apellidos} onChange={() => {}} readOnly />
-              <FormInput label="Genero:" value={form.genero} onChange={() => {}} readOnly />
-              <FormInput label="Correo Electronico:" value={form.correo} onChange={() => {}} readOnly className="md:col-span-2" />
-              <FormInput label="Telefono:" value={form.telefono} onChange={() => {}} readOnly />
-              <FormInput label="Direccion:" value={form.direccion} onChange={() => {}} readOnly />
-              <FormInput label="Departamento:" value={form.departamento} onChange={() => {}} readOnly />
-              <FormInput label="Municipio:" value={form.municipio} onChange={() => {}} readOnly />
-              <FormInput label="Estrato:" value={form.estrato} onChange={() => {}} readOnly />
-              <FormInput label="Poblacion vulnerable:" value={form.poblacionVulnerable} onChange={() => {}} readOnly />
-              <FormInput label="Estado civil:" value={form.estadoCivil} onChange={() => {}} readOnly />
+              <FormInput label="Tipo de documento:" value={form.tipoDocumento} onChange={() => { }} readOnly />
+              <FormInput label="Numero de documento:" value={form.numeroDocumento} onChange={() => { }} readOnly />
+              <FormInput label="Lugar expedicion:" value={form.lugarExpedicion} onChange={() => { }} readOnly />
+              <FormInput label="Nombres:" value={form.nombres} onChange={() => { }} readOnly />
+              <FormInput label="Apellidos:" value={form.apellidos} onChange={() => { }} readOnly />
+              <FormInput label="Genero:" value={form.genero} onChange={() => { }} readOnly />
+              <FormInput label="Correo Electronico:" value={form.correo} onChange={() => { }} readOnly className="md:col-span-2" />
+              <FormInput label="Telefono:" value={form.telefono} onChange={() => { }} readOnly />
+              <FormInput label="Direccion:" value={form.direccion} onChange={() => { }} readOnly />
+              <FormInput label="Departamento:" value={form.departamento} onChange={() => { }} readOnly />
+              <FormInput label="Municipio:" value={form.municipio} onChange={() => { }} readOnly />
+              <FormInput label="Estrato:" value={form.estrato} onChange={() => { }} readOnly />
+              <FormInput label="Poblacion vulnerable:" value={form.poblacionVulnerable} onChange={() => { }} readOnly />
+              <FormInput label="Estado civil:" value={form.estadoCivil} onChange={() => { }} readOnly />
             </div>
 
             <div className="flex justify-between items-center mt-8">

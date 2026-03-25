@@ -33,6 +33,7 @@ export default function UsuarioCreado() {
     navigate('/asignar/crear-usuario', {
       state: {
         existingUser: user,
+        startInConfirm: true, // 👈 NUEVO
       },
     })
   }
