@@ -15,7 +15,50 @@ const DOCUMENT_TYPES = [
   'Pasaporte',
   'NIT',
 ]
+const GENEROS = [
+  'Masculino',
+  'Femenino',
+  'No binario',
+  'Prefiero no decirlo',
+]
 
+const ESTADOS_CIVILES = [
+  'Soltero(a)',
+  'Casado(a)',
+  'Unión libre',
+  'Divorciado(a)',
+  'Viudo(a)',
+]
+
+const ESTRATOS = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+]
+
+const POBLACIONES_VULNERABLES = [
+  'Ninguna',
+  'Víctima del conflicto',
+  'Persona con discapacidad',
+  'Adulto mayor',
+  'Madre cabeza de hogar',
+  'Migrante',
+  'Población desplazada',
+]
+
+const DEPARTAMENTOS = [
+  'Valle del Cauca',
+  'Cauca',
+  'Nariño',
+  'Antioquia',
+  'Cundinamarca',
+  'Atlántico',
+  'Santander',
+  'Otro',
+]
 const initialForm = {
   tipoDocumento: '',
   numeroDocumento: '',
@@ -95,15 +138,41 @@ export default function CrearUsuario() {
               <FormInput label="Lugar expedicion:" value={form.lugarExpedicion} onChange={() => { }} readOnly />
               <FormInput label="Nombres:" value={form.nombres} onChange={() => { }} readOnly />
               <FormInput label="Apellidos:" value={form.apellidos} onChange={() => { }} readOnly />
-              <FormInput label="Genero:" value={form.genero} onChange={() => { }} readOnly />
+              <FormSelect
+                label="Genero:"
+                value={form.genero}
+                onChange={updateField('genero')}
+                options={GENEROS}
+              />
               <FormInput label="Correo Electronico:" value={form.correo} onChange={() => { }} readOnly className="md:col-span-2" />
               <FormInput label="Telefono:" value={form.telefono} onChange={() => { }} readOnly />
               <FormInput label="Direccion:" value={form.direccion} onChange={() => { }} readOnly />
-              <FormInput label="Departamento:" value={form.departamento} onChange={() => { }} readOnly />
+              <FormSelect
+                label="Departamento:"
+                value={form.departamento}
+                onChange={updateField('departamento')}
+                options={DEPARTAMENTOS}
+              />
               <FormInput label="Municipio:" value={form.municipio} onChange={() => { }} readOnly />
-              <FormInput label="Estrato:" value={form.estrato} onChange={() => { }} readOnly />
-              <FormInput label="Poblacion vulnerable:" value={form.poblacionVulnerable} onChange={() => { }} readOnly />
-              <FormInput label="Estado civil:" value={form.estadoCivil} onChange={() => { }} readOnly />
+
+              <FormSelect
+                label="Estrato:"
+                value={form.estrato}
+                onChange={updateField('estrato')}
+                options={ESTRATOS}
+              />
+              <FormSelect
+                label="Poblacion vulnerable:"
+                value={form.poblacionVulnerable}
+                onChange={updateField('poblacionVulnerable')}
+                options={POBLACIONES_VULNERABLES}
+              />
+              <FormSelect
+                label="Estado civil:"
+                value={form.estadoCivil}
+                onChange={updateField('estadoCivil')}
+                options={ESTADOS_CIVILES}
+              />
             </div>
             <div className="flex justify-between items-center mt-8">
               <OrangeButton variant="primary" onClick={() => setStep(1)}>
