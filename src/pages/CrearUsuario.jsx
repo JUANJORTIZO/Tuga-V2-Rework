@@ -138,41 +138,15 @@ export default function CrearUsuario() {
               <FormInput label="Lugar expedicion:" value={form.lugarExpedicion} onChange={() => { }} readOnly />
               <FormInput label="Nombres:" value={form.nombres} onChange={() => { }} readOnly />
               <FormInput label="Apellidos:" value={form.apellidos} onChange={() => { }} readOnly />
-              <FormSelect
-                label="Genero:"
-                value={form.genero}
-                onChange={updateField('genero')}
-                options={GENEROS}
-              />
+              <FormInput label="Genero:" value={form.genero} onChange={() => { }} readOnly />
               <FormInput label="Correo Electronico:" value={form.correo} onChange={() => { }} readOnly className="md:col-span-2" />
               <FormInput label="Telefono:" value={form.telefono} onChange={() => { }} readOnly />
               <FormInput label="Direccion:" value={form.direccion} onChange={() => { }} readOnly />
-              <FormSelect
-                label="Departamento:"
-                value={form.departamento}
-                onChange={updateField('departamento')}
-                options={DEPARTAMENTOS}
-              />
+              <FormInput label="Departamento:" value={form.departamento} onChange={() => { }} readOnly />
               <FormInput label="Municipio:" value={form.municipio} onChange={() => { }} readOnly />
-
-              <FormSelect
-                label="Estrato:"
-                value={form.estrato}
-                onChange={updateField('estrato')}
-                options={ESTRATOS}
-              />
-              <FormSelect
-                label="Poblacion vulnerable:"
-                value={form.poblacionVulnerable}
-                onChange={updateField('poblacionVulnerable')}
-                options={POBLACIONES_VULNERABLES}
-              />
-              <FormSelect
-                label="Estado civil:"
-                value={form.estadoCivil}
-                onChange={updateField('estadoCivil')}
-                options={ESTADOS_CIVILES}
-              />
+              <FormInput label="Estrato:" value={form.estrato} onChange={() => { }} readOnly />
+              <FormInput label="Poblacion vulnerable:" value={form.poblacionVulnerable} onChange={() => { }} readOnly />
+              <FormInput label="Estado civil:" value={form.estadoCivil} onChange={() => { }} readOnly />
             </div>
             <div className="flex justify-between items-center mt-8">
               <OrangeButton variant="primary" onClick={() => setStep(1)}>
@@ -245,15 +219,41 @@ export default function CrearUsuario() {
             <FormInput label="Lugar expedicion:" value={form.lugarExpedicion} onChange={updateField('lugarExpedicion')} />
             <FormInput label="Nombres:" value={form.nombres} onChange={updateField('nombres')} />
             <FormInput label="Apellidos:" value={form.apellidos} onChange={updateField('apellidos')} />
-            <FormInput label="Genero:" value={form.genero} onChange={updateField('genero')} />
+            <FormSelect
+              label="Genero:"
+              value={form.genero}
+              onChange={updateField('genero')}
+              options={GENEROS}
+            />
             <FormInput label="Correo Electronico:" value={form.correo} onChange={updateField('correo')} className="md:col-span-2" />
             <FormInput label="Telefono:" value={form.telefono} onChange={updateField('telefono')} />
             <FormInput label="Direccion:" value={form.direccion} onChange={updateField('direccion')} />
-            <FormInput label="Departamento:" value={form.departamento} onChange={updateField('departamento')} />
-            <FormInput label="Municipio:" value={form.municipio} onChange={updateField('municipio')} />
-            <FormInput label="Estrato:" value={form.estrato} onChange={updateField('estrato')} />
-            <FormInput label="Poblacion vulnerable:" value={form.poblacionVulnerable} onChange={updateField('poblacionVulnerable')} />
-            <FormInput label="Estado civil:" value={form.estadoCivil} onChange={updateField('estadoCivil')} />
+            <FormSelect
+              label="Departamento:"
+              value={form.departamento}
+              onChange={updateField('departamento')}
+              options={DEPARTAMENTOS}
+            />
+            <FormSelect
+              label="Estrato:"
+              value={form.estrato}
+              onChange={updateField('estrato')}
+              options={ESTRATOS}
+            />
+
+            <FormSelect
+              label="Poblacion vulnerable:"
+              value={form.poblacionVulnerable}
+              onChange={updateField('poblacionVulnerable')}
+              options={POBLACIONES_VULNERABLES}
+            />
+
+            <FormSelect
+              label="Estado civil:"
+              value={form.estadoCivil}
+              onChange={updateField('estadoCivil')}
+              options={ESTADOS_CIVILES}
+            />
           </div>
           <div className="flex justify-between mt-8">
             <OrangeButton variant="primary" onClick={() => navigate('/asignar')}>{'Atr\u00e1s'}</OrangeButton>

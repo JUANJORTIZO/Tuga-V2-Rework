@@ -112,7 +112,7 @@ const SEED_DATA = {
     {
       /*  git add .
           git commit -m "actualizacion del proyecto"
-          git push   */ 
+          git push   */
 
       // ELA22005525
 
@@ -328,12 +328,12 @@ export function completeTurn(turnId, caseCode, caseNumber, userName) {
   const updatedTurns = turns.map((turn) =>
     String(turn.id) === String(turnId)
       ? {
-          ...turn,
-          estado: 'ATENDIDO',
-          caseCode,
-          caseNumber,
-          userName,
-        }
+        ...turn,
+        estado: 'ATENDIDO',
+        caseCode,
+        caseNumber,
+        userName,
+      }
       : turn
   )
 
