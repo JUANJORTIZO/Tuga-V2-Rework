@@ -71,7 +71,7 @@ const SEED_DATA = {
       numeroDocumento: '12900847',
       lugarExpedicion: 'Cali',
       nombres: 'Ruben',
-      apellidos: 'gonzalez Boya',
+      apellidos: 'gonzalez Ackerman',
       genero: 'Masculino',
       correo: 'ruben.gonzalez@gmail.com',
       telefono: '3201012203',
@@ -348,6 +348,17 @@ export function completeTurn(turnId, caseCode, caseNumber, userName) {
   localStorage.setItem(STORAGE_KEYS.TURNS, JSON.stringify(updatedTurns))
 
   return updatedTurns.find((turn) => String(turn.id) === String(turnId)) || null
+}
+
+export function updateCase(codigo, updatedCase) {
+  const cases = getCases()
+  const index = cases.findIndex((c) => c.codigo === codigo)
+
+  if (index === -1) return null
+
+  cases[index] = updatedCase
+  localStorage.setItem(STORAGE_KEYS.CASES, JSON.stringify(cases))
+  return updatedCase
 }
 /*
 export function deleteTurn(id) {

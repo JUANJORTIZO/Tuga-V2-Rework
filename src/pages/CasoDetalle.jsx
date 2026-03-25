@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getCaseByCode, getUserByCode, addCaseHistory, getSession } from '../services/storage'
+import { getCaseByCode, getUserByCode, addCaseHistory, getSession, updateCase } from '../services/storage'
 import Navbar from '../components/Navbar'
 import BackgroundLayout from '../components/BackgroundLayout'
 import Panel from '../components/Panel'
@@ -30,35 +30,52 @@ export default function CasoDetalle() {
   }
 
   function handleAddHistory(e) {
-    e.preventDefault()
-    if (!historyForm.detalle.trim()) {
-      alert('El campo Detalle es obligatorio')
-      return
-    }
-    const session = getSession()
-    const now = new Date()
+  e.preventDefault()
 
-    const fecha = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
-
-    addCaseHistory(codigo, {
-      fecha,
-      estado: 'EN PROCESO',
-      abogado: session?.name || 'Desconocido',
-      detalle: historyForm.detalle,
-      remitidoA: '',
-      adjunto: historyForm.adjunto
-        ? {
-          id: Date.now(),
-          fecha,
-          nombre: historyForm.adjunto.name,
-          url: URL.createObjectURL(historyForm.adjunto),
-        }
-        : null,
-    })
-
-    setHistoryForm({ verInforme: false, detalle: '', adjunto: null })
-    loadCase()
+  if (!historyForm.detalle.trim()) {
+    alert('El campo Detalle es obligatorio')
+    return
   }
+
+  const session = getSession()
+  const now = new Date()
+
+  const fecha = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
+
+  const nuevoAdjunto = historyForm.adjunto
+    ? {
+        id: Date.now(),
+        fecha,
+        nombre: historyForm.adjunto.name,
+        url: URL.createObjectURL(historyForm.adjunto),
+      }
+    : null
+
+  addCaseHistory(codigo, {
+    fecha,
+    estado: 'EN PROCESO',
+    abogado: session?.name || 'Desconocido',
+    detalle: historyForm.detalle,
+    remitidoA: '',
+    adjunto: nuevoAdjunto,
+  })
+
+  if (nuevoAdjunto) {
+    const casoActual = getCaseByCode(codigo)
+
+    if (casoActual) {
+      const updatedCase = {
+        ...casoActual,
+        attachments: [...(casoActual.attachments || []), nuevoAdjunto],
+      }
+
+      updateCase(codigo, updatedCase)
+    }
+  }
+
+  setHistoryForm({ verInforme: false, detalle: '', adjunto: null })
+  loadCase()
+}
 
   if (!caso) {
     return (
