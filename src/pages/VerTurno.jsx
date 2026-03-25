@@ -17,12 +17,6 @@ const DOCUMENT_TYPES = [
   'NIT',
 ]
 
-const navigate = useNavigate()
-const { id } = useParams()
-const location = useLocation()
-
-const [step, setStep] = useState(location.state?.initialStep || 1)
-
 const PROFESORES = [
   'ISABELLA RIOS',
   'NATHALIA FUENTES',
@@ -51,9 +45,12 @@ const ESTUDIANTES = [
 ]
 
 export default function VerTurno() {
+  
   const navigate = useNavigate()
   const { id } = useParams()
-  const [step, setStep] = useState(1)
+  const location = useLocation()
+
+  const [step, setStep] = useState(location.state?.initialStep || 1)
   const [turn, setTurn] = useState(null)
   const [user, setUser] = useState(null)
   const [form, setForm] = useState({})
