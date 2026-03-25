@@ -74,7 +74,11 @@ export default function Turnos() {
                   <div className="flex items-center gap-2 md:justify-center">
                     <span className="md:hidden font-bold text-usb-dark text-sm">Caso:</span>
                     <button
-                      onClick={() => navigate(`/turnos/${turn.id}`)}
+                      onClick={() =>
+                        navigate(`/turnos/${turn.id}`, {
+                          state: { initialStep: 2 },
+                        })
+                      }
                       className="bg-usb-gray-input rounded-lg px-4 py-2 hover:bg-usb-orange/10 transition-colors cursor-pointer"
                     >
                       <Pencil size={18} className="text-usb-text-gray" />
