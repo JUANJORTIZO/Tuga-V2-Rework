@@ -106,10 +106,9 @@ export default function CrearUsuario() {
               <FormInput label="Estado civil:" value={form.estadoCivil} onChange={() => { }} readOnly />
             </div>
             <div className="flex justify-between items-center mt-8">
-              <OrangeButton variant="primary" onClick={() => navigate(-1)}>
+              <OrangeButton variant="primary" onClick={() => setStep(1)}>
                 Atrás
               </OrangeButton>
-
               <div className="flex gap-4">
                 <OrangeButton onClick={handleCreateTurn}>
                   Crear turno
@@ -154,7 +153,9 @@ export default function CrearUsuario() {
     const newUser = createUser(form)
     const newTurn = createTurn(buildTurnData(newUser.code))
 
-    navigate(`/turnos/${newTurn.id}`)
+    navigate(`/turnos/${newTurn.id}`, {
+      state: { initialStep: 2 },
+    })
   }
 
 

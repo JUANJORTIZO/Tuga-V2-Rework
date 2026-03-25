@@ -10,7 +10,7 @@ const SEED_DATA = {
   admins: [
     { username: 'admin', password: 'admin', name: 'Administrador' },
     { username: 'isabella', password: '1234', name: 'Isabella Molina Sanchez' },
-    { username: 'Erazo', password: '4321', name: 'Santiago Erazo Ortega' },
+    { username: 'prueba', password: 'prueba', name: 'Prueba' },
   ],
   users: [
     {

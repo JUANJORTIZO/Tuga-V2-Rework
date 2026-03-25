@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { getTurnById, getUserByCode, updateTurn, createCaseFromTurn, getSession, completeTurn } from '../services/storage'
 import Navbar from '../components/Navbar'
 import BackgroundLayout from '../components/BackgroundLayout'
@@ -16,6 +16,12 @@ const DOCUMENT_TYPES = [
   'Pasaporte',
   'NIT',
 ]
+
+const navigate = useNavigate()
+const { id } = useParams()
+const location = useLocation()
+
+const [step, setStep] = useState(location.state?.initialStep || 1)
 
 const PROFESORES = [
   'ISABELLA RIOS',
