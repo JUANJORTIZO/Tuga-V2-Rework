@@ -16,7 +16,50 @@ const DOCUMENT_TYPES = [
   'Pasaporte',
   'NIT',
 ]
+const GENEROS = [
+  'Masculino',
+  'Femenino',
+  'No binario',
+  'Prefiero no decirlo',
+]
 
+const ESTADOS_CIVILES = [
+  'Soltero(a)',
+  'Casado(a)',
+  'Unión libre',
+  'Divorciado(a)',
+  'Viudo(a)',
+]
+
+const ESTRATOS = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+]
+
+const POBLACIONES_VULNERABLES = [
+  'Ninguna',
+  'Víctima del conflicto',
+  'Persona con discapacidad',
+  'Adulto mayor',
+  'Madre cabeza de hogar',
+  'Migrante',
+  'Población desplazada',
+]
+
+const DEPARTAMENTOS = [
+  'Valle del Cauca',
+  'Cauca',
+  'Nariño',
+  'Antioquia',
+  'Cundinamarca',
+  'Atlántico',
+  'Santander',
+  'Otro',
+]
 const PROFESORES = [
   'ISABELLA RIOS',
   'NATHALIA FUENTES',
@@ -45,7 +88,7 @@ const ESTUDIANTES = [
 ]
 
 export default function VerTurno() {
-  
+
   const navigate = useNavigate()
   const { id } = useParams()
   const location = useLocation()
@@ -118,7 +161,7 @@ export default function VerTurno() {
 
     completeTurn(turn.id, newCase.codigo, newCase.numeroCaso, getNombreCompleto())
 
-    navigate(`/casos/${newCase.codigo}`)
+    navigate('/', { state: { caseCreated: true } })
   }
 
   function handleStepTwoNext() {
@@ -182,15 +225,40 @@ export default function VerTurno() {
               <FormInput label="Lugar expedicion:" value={form.lugarExpedicion || ''} onChange={updateField('lugarExpedicion')} />
               <FormInput label="Nombres:" value={form.nombres || ''} onChange={updateField('nombres')} />
               <FormInput label="Apellidos:" value={form.apellidos || ''} onChange={updateField('apellidos')} />
-              <FormInput label="Genero:" value={form.genero || ''} onChange={updateField('genero')} />
+              <FormSelect
+                label="Genero:"
+                value={form.genero}
+                onChange={updateField('genero')}
+                options={GENEROS}
+              />
               <FormInput label="Correo Electronico:" value={form.correo || ''} onChange={updateField('correo')} className="md:col-span-2" />
               <FormInput label="Telefono:" value={form.telefono || ''} onChange={updateField('telefono')} />
               <FormInput label="Direccion:" value={form.direccion || ''} onChange={updateField('direccion')} />
-              <FormInput label="Departamento:" value={form.departamento || ''} onChange={updateField('departamento')} />
+              <FormSelect
+                label="Departamento:"
+                value={form.departamento}
+                onChange={updateField('departamento')}
+                options={DEPARTAMENTOS}
+              />
               <FormInput label="Municipio:" value={form.municipio || ''} onChange={updateField('municipio')} />
-              <FormInput label="Estrato:" value={form.estrato || ''} onChange={updateField('estrato')} />
-              <FormInput label="Poblacion vulnerable:" value={form.poblacionVulnerable || ''} onChange={updateField('poblacionVulnerable')} />
-              <FormInput label="Estado civil:" value={form.estadoCivil || ''} onChange={updateField('estadoCivil')} />
+              <FormSelect
+                label="Estrato:"
+                value={form.estrato}
+                onChange={updateField('estrato')}
+                options={ESTRATOS}
+              />
+              <FormSelect
+                label="Poblacion vulnerable:"
+                value={form.poblacionVulnerable}
+                onChange={updateField('poblacionVulnerable')}
+                options={POBLACIONES_VULNERABLES}
+              />
+              <FormSelect
+                label="Estado civil:"
+                value={form.estadoCivil}
+                onChange={updateField('estadoCivil')}
+                options={ESTADOS_CIVILES}
+              />
             </div>
             <div className="flex justify-between mt-8">
               <OrangeButton variant="primary" onClick={() => navigate('/turnos')}>{'Atr\u00e1s'}</OrangeButton>
