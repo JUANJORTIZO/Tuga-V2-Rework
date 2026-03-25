@@ -142,7 +142,7 @@ const SEED_DATA = {
         { fecha: '20-08-2025 08:46', estado: 'COMPLETADO', abogado: 'Nathalia Pelaez Perez', detalle: 'Revisar correcciones.', remitidoA: '' },
         { fecha: '21-08-2025 17:25', estado: 'COMPLETADO', abogado: 'Isabella Fuentes Rodallega', detalle: 'Correccion', remitidoA: '' },
         { fecha: '22-08-2025 11:26', estado: 'COMPLETADO', abogado: 'Nathalia Pelaez Perez', detalle: 'Aprobado para remision. Subir el soporte de envio al usuario', remitidoA: '' },
-        { fecha: '22-08-2025 23:33', estado: 'COMPLETADO', abogado: 'Isabella Fuentes Rodallega', detalle: 'Adjunto evidencia de envio al usuario', remitidoA: '' },
+        { fecha: '22-08-2025 23:33', estado: 'EN PROCESO', abogado: 'Isabella Fuentes Rodallega', detalle: 'Adjunto evidencia de envio al usuario', remitidoA: '' },
       ],
     },
   ],
