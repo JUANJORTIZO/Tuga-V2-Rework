@@ -191,11 +191,19 @@ export function getUsers() {
 }
 
 export function getUserByDocument(doc) {
-  return getUsers().find((u) => u.numeroDocumento === doc) || null
+  return (
+    getUsers().find(
+      (u) => String(u.numeroDocumento).trim() === String(doc).trim()
+    ) || null
+  )
 }
 
 export function getUserByCode(code) {
-  return getUsers().find((u) => u.code === code) || null
+  return (
+    getUsers().find(
+      (u) => String(u.code).trim() === String(code).trim()
+    ) || null
+  )
 }
 
 export function createUser(data) {

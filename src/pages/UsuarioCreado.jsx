@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getUserByDocument, createTurn } from '../services/storage'
+import { getUserByDocument } from '../services/storage'
 import Navbar from '../components/Navbar'
 import BackgroundLayout from '../components/BackgroundLayout'
 import Panel from '../components/Panel'
@@ -15,24 +15,24 @@ export default function UsuarioCreado() {
   function handleSearch(e) {
     e.preventDefault()
     setError('')
-    const user = getUserByDocument(documento)
+
+    const value = documento.trim()
+
+    if (!value) {
+      setError('Debes ingresar un numero de documento')
+      return
+    }
+
+    const user = getUserByDocument(value)
+
     if (!user) {
       setError('No se encontro un usuario con ese numero de documento')
       return
     }
-    const turn = createTurn({
-      userCode: user.code,
-      sede: 'La Umbria - Parque tecnologico',
-      tipo: 'General',
-      fecha: new Date().toISOString().split('T')[0],
-    })
-    navigate('/asignar/turno-asignado', {
+
+    navigate('/asignar/crear-usuario', {
       state: {
-        code: user.code,
-        turnId: turn.id,
-        tipoDocumento: user.tipoDocumento,
-        numeroDocumento: user.numeroDocumento,
-        nombre: `${user.apellidos} ${user.nombres}`,
+        existingUser: user,
       },
     })
   }
@@ -42,7 +42,10 @@ export default function UsuarioCreado() {
       <Navbar />
       <BackgroundLayout>
         <Panel maxWidth="max-w-lg">
-          <h2 className="text-2xl md:text-3xl font-serif-title text-center mb-8">Usuario creado</h2>
+          <h2 className="text-2xl md:text-3xl font-serif-title text-center mb-8">
+            Usuario creado
+          </h2>
+
           <form onSubmit={handleSearch} className="flex flex-col gap-6">
             <FormInput
               label="Numero de documento:"
@@ -50,10 +53,20 @@ export default function UsuarioCreado() {
               onChange={setDocumento}
               placeholder="Escribir"
             />
+
             {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
             <div className="flex justify-between mt-4">
-              <OrangeButton variant="primary" onClick={() => navigate('/asignar')}>{'Atr\u00e1s'}</OrangeButton>
-              <OrangeButton type="submit">Buscar</OrangeButton>
+              <OrangeButton
+                variant="primary"
+                onClick={() => navigate('/asignar')}
+              >
+                {'Atrás'}
+              </OrangeButton>
+
+              <OrangeButton type="submit">
+                Buscar
+              </OrangeButton>
             </div>
           </form>
         </Panel>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { createUser, createTurn } from '../services/storage'
 import Navbar from '../components/Navbar'
 import BackgroundLayout from '../components/BackgroundLayout'
@@ -77,9 +77,23 @@ const initialForm = {
 }
 
 export default function CrearUsuario() {
+  const location = useLocation()
   const navigate = useNavigate()
   const [step, setStep] = useState(1) // 1 = form, 2 = confirm
   const [form, setForm] = useState(initialForm)
+  const existingUser = location.state?.existingUser || null
+
+  useEffect(() => {
+    if (location.state?.existingUser) {
+      setForm(location.state.existingUser)
+    }
+  }, [location.state])
+
+  function getCurrentUser() {
+    if (existingUser) return existingUser
+    return createUser(form)
+  }
+
 
   function updateField(field) {
     return (value) => setForm((prev) => ({ ...prev, [field]: value }))
@@ -178,23 +192,23 @@ export default function CrearUsuario() {
   }
 
   function handleCreateTurn() {
-    const newUser = createUser(form)
-    const newTurn = createTurn(buildTurnData(newUser.code))
+    const currentUser = getCurrentUser()
+    const newTurn = createTurn(buildTurnData(currentUser.code))
 
     navigate('/asignar/turno-asignado', {
       state: {
-        code: newUser.code,
+        code: currentUser.code,
         turnId: newTurn.id,
-        tipoDocumento: newUser.tipoDocumento,
-        numeroDocumento: newUser.numeroDocumento,
-        nombre: `${newUser.apellidos} ${newUser.nombres}`,
+        tipoDocumento: currentUser.tipoDocumento,
+        numeroDocumento: currentUser.numeroDocumento,
+        nombre: `${currentUser.apellidos} ${currentUser.nombres}`,
       },
     })
   }
 
   function handleRegisterCase() {
-    const newUser = createUser(form)
-    const newTurn = createTurn(buildTurnData(newUser.code))
+    const currentUser = getCurrentUser()
+    const newTurn = createTurn(buildTurnData(currentUser.code))
 
     navigate(`/turnos/${newTurn.id}`, {
       state: { initialStep: 2 },
