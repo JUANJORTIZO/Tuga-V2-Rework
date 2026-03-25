@@ -32,7 +32,7 @@ export default function Navbar({ variant = 'default' }) {
         <div className="flex items-center gap-3">
           <img
             src="/images/logousb.png"
-            className="hidden sm:block h-14 md:h-16 lg:h-18 w-auto object-contain"
+            className="hidden sm:block h-16 md:h-18 lg:h-20 w-auto object-contain"
           />
           <div className="hidden sm:block w-px h-10 bg-usb-dark/30" />
           <div className="hidden sm:block">
