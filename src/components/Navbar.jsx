@@ -61,15 +61,11 @@ export default function Navbar({ variant = 'default' }) {
       )}
 
       <div className="flex items-center gap-3">
-        {isLogin ? (
-          <button className="w-11 h-11 rounded-full bg-usb-tan/80 flex items-center justify-center text-white hover:bg-usb-tan transition-colors">
-            <HelpCircle size={22} />
-          </button>
-        ) : (
-          <button className="w-11 h-11 rounded-full bg-usb-tan/80 flex items-center justify-center text-white hover:bg-usb-tan transition-colors">
-            <Bell size={22} />
-          </button>
-        )}
+        
+
+
+
+        
 
         {authed && !isLogin && (
           <button
